@@ -1,0 +1,8 @@
+@import "./theme.css";
+@import "./layout.css";
+@import "./components.css";
+@import "./pages/dashboard.css";
+@import "./pages/convenios.css";
+@import "./pages/ia-center.css";
+@import "./pages/configuracion.css";
+@import "./premium.css";

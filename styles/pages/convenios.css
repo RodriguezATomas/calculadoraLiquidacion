@@ -1,0 +1,11 @@
+.convenios-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.convenios-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

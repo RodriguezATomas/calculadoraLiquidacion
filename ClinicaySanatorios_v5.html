@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-Sueldos - Clinicas y Sanatorios CCT 122/75</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/theme.css">
+<script src="config/gemini-config.js"></script>
+<style>
+:root{--azul:#5f67ff;--azul-dk:#4b59ff;--azul-xdk:#7b4dff;--azul-lt:#eef0ff;--azul-mid:#9ca4ff;--ok:#2E7D32;--warn:#E65100;--err:#B71C1C;--bg:#f4f7ff;--surface:#fff;--border:#d9e2ff;--text:#18264d;--text-2:#53648f;--text-3:#8a97bb;--radius:22px;--shadow:0 16px 36px rgba(71,95,180,.10);--font:"Plus Jakarta Sans",sans-serif;--mono:"JetBrains Mono",monospace;--max-w:1280px}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px}.hdr{background:var(--azul);height:60px;display:flex;align-items:center;padding:0 28px;gap:14px;position:sticky;top:0;z-index:20;box-shadow:0 2px 12px rgba(0,0,0,.2)}.logo{font-weight:800;color:#fff;font-size:19px}.hdr-title{color:#fff;font-size:14px;font-weight:700;opacity:.92}.badge{background:rgba(255,255,255,.18);color:#fff;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px}.spacer{flex:1}.hbtn{height:34px;border-radius:7px;background:rgba(255,255,255,.12);border:0;color:#fff;font-weight:700;padding:0 14px;cursor:pointer;font-family:var(--font);display:inline-flex;align-items:center;justify-content:center;line-height:1;text-decoration:none;white-space:nowrap}.page{max-width:var(--max-w);margin:0 auto;padding:28px 16px 48px}.pg-title{font-size:22px;font-weight:800;letter-spacing:-.4px}.pg-sub{font-size:13px;color:var(--text-3);margin-top:5px}.tabs{display:flex;gap:4px;margin:20px 0;background:var(--surface);padding:5px;border-radius:var(--radius);width:fit-content;border:1px solid var(--border);box-shadow:var(--shadow)}.tab{padding:8px 18px;border:0;border-radius:7px;background:transparent;color:var(--text-3);font-weight:800;cursor:pointer;font-family:var(--font)}.tab.active{background:var(--azul);color:#fff}.section{display:none}.section.active{display:block}.stepper{display:flex;align-items:center;background:var(--surface);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow);margin-bottom:18px;border:1px solid var(--border);overflow-x:auto}.step{display:flex;align-items:center;gap:8px}.step-line{flex:1;height:2px;background:var(--border);min-width:14px}.step-line.done{background:var(--azul-mid)}.step-num{width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:12px;font-weight:800}.step.active .step-num{background:var(--azul);border-color:var(--azul);color:#fff}.step.done .step-num{background:var(--azul-dk);border-color:var(--azul-dk);color:#fff}.step-lbl{font-size:11px;font-weight:700;color:var(--text-3);white-space:nowrap}.step.active .step-lbl{color:var(--azul)}.card{background:var(--surface);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:16px}.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:1.5px solid var(--border)}.card-title{font-size:15px;font-weight:800;display:flex;gap:9px;align-items:center}.ic{width:28px;height:28px;border-radius:7px;background:var(--azul-lt);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--azul)}.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}.fg.g3{grid-template-columns:1fr 1fr 1fr}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:11px;font-weight:800;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px}.field input,.field select{border:1.5px solid var(--border);border-radius:7px;padding:9px 12px;font:13px var(--font);color:var(--text);background:#fff;width:100%}.field input:focus,.field select:focus{outline:0;border-color:var(--azul);box-shadow:0 0 0 3px rgba(21,101,192,.1)}.hint{font-size:11px;color:var(--text-3)}.hint.ok{color:var(--ok);font-weight:700}.callout{background:#E1F5FE;border-left:3px solid #0277BD;color:#0277BD;padding:11px 15px;border-radius:8px;font-size:12px;line-height:1.6;margin-bottom:14px}.prev{display:none;background:var(--azul-lt);border:1.5px solid var(--azul-mid);border-radius:8px;padding:12px 16px;margin:10px 0}.prev.show{display:block}.prev strong{display:block;font-size:10px;color:var(--azul);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}.prev-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.pi{display:flex;justify-content:space-between;font-size:12px}.pv{font-family:var(--mono);font-weight:800;color:var(--azul)}.tw{display:flex;justify-content:space-between;gap:14px;align-items:center;border-bottom:1px solid var(--border);padding:11px 0}.tw:last-child{border-bottom:0}.ti-lbl{font-weight:700}.ti-sub{font-size:11px;color:var(--text-3);margin-top:2px}.tgl{position:relative;width:40px;height:22px;flex-shrink:0}.tgl input{opacity:0}.tsl{position:absolute;inset:0;background:#CBD5E0;border-radius:22px;cursor:pointer}.tsl:before{content:"";position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}input:checked+.tsl{background:var(--azul)}input:checked+.tsl:before{transform:translateX(18px)}.btn{padding:9px 20px;border:0;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--font)}.btn-primary{background:var(--azul);color:#fff}.btn-secondary{background:#fff;color:var(--text);border:1.5px solid var(--border)}.btn-success{background:var(--ok);color:#fff}.nav-row{display:flex;justify-content:space-between;margin-top:8px}.paso{display:none}.paso.active{display:block}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.sc{background:#fff;border-radius:var(--radius);padding:15px 16px;border:1px solid var(--border);box-shadow:var(--shadow)}.sl{font-size:10px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px}.sv{font-size:18px;font-weight:800;font-family:var(--mono);margin-top:5px}.ss{font-size:11px;color:var(--text-3);margin-top:3px}.res-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}.rt{padding:7px 16px;border:1.5px solid var(--border);background:#fff;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer;color:var(--text-2);font-family:var(--font)}.rt.active{background:var(--azul);color:#fff;border-color:var(--azul)}.rec-hdr{background:linear-gradient(135deg,var(--azul-xdk),var(--azul));color:#fff;padding:18px 22px;border-radius:var(--radius);margin-bottom:16px}.rec-emp{font-size:18px;font-weight:800}.rec-meta{font-size:12px;opacity:.85;margin-top:5px;display:flex;gap:14px;flex-wrap:wrap}.rec-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}.rec-block h4{font-size:10px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);padding-bottom:8px;margin-bottom:8px;color:var(--text-3)}.row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid #F5F7FA}.rm{font-family:var(--mono);font-weight:800;min-width:120px;text-align:right}.pos{color:var(--ok)}.neg{color:var(--err)}.sub{display:flex;justify-content:space-between;background:var(--azul-lt);color:var(--azul);font-weight:800;border-radius:7px;padding:8px 12px;margin-top:8px}.nr{background:#FFF8E1;border:1.5px solid #FFB300;border-radius:8px;padding:12px 16px;margin:14px 0}.tot{background:linear-gradient(135deg,var(--azul-dk),var(--azul-xdk));border-radius:var(--radius);padding:18px 22px;color:#fff;margin-top:12px}.tot-row{display:flex;justify-content:space-between;padding:5px 0}.tot-row.main{font-size:20px;font-weight:800;border-top:1.5px solid rgba(255,255,255,.25);margin-top:10px;padding-top:12px}.dt{width:100%;border-collapse:collapse;font-size:13px}.dt th{background:var(--bg);color:var(--text-2);padding:8px 11px;text-align:left;font-size:11px;font-weight:800;text-transform:uppercase;white-space:nowrap;border-bottom:1.5px solid var(--border)}.dt td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:middle}.dt .num{text-align:right;font-family:var(--mono);font-weight:700}.box{overflow-x:auto;border:1px solid var(--border);border-radius:8px}.cs{background:var(--bg);border-radius:8px;padding:10px 14px;margin-bottom:8px;border-left:3px solid var(--azul)}.cs .ct{font-weight:800;color:var(--azul)}.cs .cf{font-size:12px;color:var(--text-2);margin:3px 0;font-style:italic}.cs .cr{font-size:14px;font-weight:800;color:var(--ok);text-align:right;font-family:var(--mono)}.chart-wrap{max-width:300px;margin:0 auto 14px}.foot{text-align:center;color:var(--text-3);font-size:11px;margin-top:30px;line-height:1.7}@media(max-width:720px){.hdr{padding:0 14px}.fg,.fg.g3,.rec-cols,.stat-grid{grid-template-columns:1fr}.tabs{width:100%;overflow-x:auto}.step-lbl{display:none}.card{padding:18px}.prev-grid{grid-template-columns:1fr}}
+#chatbot-panel{position:fixed;bottom:24px;right:24px;width:390px;height:580px;background:var(--surface);border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.22);display:flex;flex-direction:column;z-index:9999;border:1px solid var(--border);transform:scale(0);transform-origin:bottom right;opacity:0;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;pointer-events:none}
+#chatbot-panel.open{transform:scale(1);opacity:1;pointer-events:all}
+.cb-head{background:linear-gradient(135deg,#1565C0,#0D47A1);padding:16px 18px;border-radius:16px 16px 0 0;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.cb-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.cb-info{flex:1}
+.cb-name{color:#fff;font-size:14px;font-weight:700;line-height:1.2}
+.cb-status{color:rgba(255,255,255,.72);font-size:11px;display:flex;align-items:center;gap:5px}
+.cb-dot{width:7px;height:7px;border-radius:50%;background:#69F0AE;animation:pulse-dot 2s infinite}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.cb-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.cb-close:hover{background:rgba(255,255,255,.28)}
+.cb-powered{font-size:10px;color:rgba(255,255,255,.58);text-align:center;padding:5px 0 6px;background:linear-gradient(135deg,#0D47A1,#0A3272);flex-shrink:0;letter-spacing:.3px}
+.cb-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.cb-msgs::-webkit-scrollbar{width:4px}.cb-msgs::-webkit-scrollbar-track{background:transparent}.cb-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.msg{max-width:82%;display:flex;flex-direction:column;gap:3px}
+.msg.bot{align-self:flex-start}.msg.usr{align-self:flex-end}
+.msg-bubble{padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.55}
+.msg.bot .msg-bubble{background:var(--azul-lt);color:var(--text);border-bottom-left-radius:4px}
+.msg.usr .msg-bubble{background:var(--azul);color:#fff;border-bottom-right-radius:4px}
+.msg-time{font-size:10px;color:var(--text-3)}.msg.usr .msg-time{text-align:right}
+.cb-typing{display:flex;align-items:center;gap:4px;padding:10px 13px;background:var(--azul-lt);border-radius:14px;border-bottom-left-radius:4px;align-self:flex-start}
+.cb-typing span{width:7px;height:7px;border-radius:50%;background:var(--azul);animation:typing-dot 1.2s infinite}
+.cb-typing span:nth-child(2){animation-delay:.2s}.cb-typing span:nth-child(3){animation-delay:.4s}
+@keyframes typing-dot{0%,80%,100%{transform:scale(.8);opacity:.4}40%{transform:scale(1);opacity:1}}
+.cb-quick{padding:8px 14px;display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;border-top:1px solid var(--border)}
+.cb-chip{padding:5px 11px;border:1.5px solid var(--azul-mid);border-radius:20px;font-size:11px;font-weight:600;color:var(--azul);cursor:pointer;background:var(--azul-lt);transition:.15s;white-space:nowrap}
+.cb-chip:hover{background:var(--azul);color:#fff}
+.cb-input-row{padding:12px 14px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--border);flex-shrink:0}
+#cb-input{flex:1;border:1.5px solid var(--border);border-radius:22px;padding:9px 15px;font-size:13px;font-family:var(--font);color:var(--text);outline:none;transition:.2s;background:var(--bg)}
+#cb-input:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(21,101,192,.1)}
+#cb-send{width:38px;height:38px;border-radius:50%;background:var(--azul);border:none;color:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}
+#cb-send:hover{background:var(--azul-dk)}#cb-send:disabled{background:var(--border);cursor:default}
+.cb-api-warning{margin:0 14px 10px;padding:9px 12px;background:#FFF3E0;border:1px solid var(--warn);border-radius:8px;font-size:11px;color:var(--warn);display:none;line-height:1.45}
+.cb-api-warning.show{display:block}
+.cb-api-input-row{padding:10px 14px;display:none;gap:8px;align-items:center;border-top:1px solid var(--border);flex-shrink:0}
+.cb-api-input-row.show{display:flex}
+#cb-apikey{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:8px 12px;font-size:12px;font-family:var(--font);color:var(--text);outline:none}
+#cb-apikey:focus{border-color:var(--azul)}
+#cb-save-key{padding:8px 14px;border:none;border-radius:7px;background:var(--azul);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
+@media(max-width:720px){#chatbot-panel{width:calc(100vw - 24px);height:calc(100vh - 90px);right:12px;bottom:12px}.hbtn:not(#btn-chatbot):not(#btn-panel){display:none}}
+.hdr-logo{display:flex;align-items:center;text-decoration:none}.hdr-divider{width:1px;height:28px;background:rgba(255,255,255,.25);margin:0 4px}.hdr-badge{background:rgba(255,255,255,.18);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap}.hdr-spacer{flex:1}.hdr-actions{display:flex;align-items:center;gap:6px}.hbtn{gap:6px}.hbtn:hover{background:rgba(255,255,255,.22)}.ico{width:16px;height:16px;stroke-width:2.3;flex-shrink:0}.hbtn .ico{width:15px;height:15px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(3px)}.modal-bg.open{display:flex}.modal{background:var(--surface);border-radius:14px;padding:26px;width:92%;max-width:720px;max-height:92vh;overflow-y:auto;box-shadow:0 4px 20px rgba(0,0,0,.13)}.modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-hdr h3{font-size:16px;font-weight:800}.btn-ghost{background:transparent;border:none;color:var(--text-2);padding:7px 12px;border-radius:7px;font-family:var(--font);font-size:13px;font-weight:800;cursor:pointer}.btn-ghost:hover{background:var(--bg)}.adm-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}.adm-tab{padding:6px 14px;border:1.5px solid var(--border);background:transparent;border-radius:6px;font-size:12px;font-weight:800;cursor:pointer;color:var(--text-2);font-family:var(--font)}.adm-tab.active{background:var(--azul);color:#fff;border-color:var(--azul)}.btn-sm{padding:6px 14px;font-size:12px}
+</style>
+</head>
+<body class="theme-app">
+<div class="theme-dashboard-shell">
+  <aside class="theme-sidebar">
+    <div class="theme-brand">
+      <div class="theme-brand__icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h6l1.2 2H19a2 2 0 0 1 2 2v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a2 2 0 0 1 2-2h2Zm4.8 5.7a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Zm-5 1.3a1 1 0 0 0 0 2h2.2a2.8 2.8 0 0 1 5.6 0H17a1 1 0 1 0 0-2h-2.4a2.8 2.8 0 0 1-5.2 0H6.8Z"/></svg>
+      </div>
+      <div><h1>Calculadora de Convenios</h1><p>Panel principal</p></div>
+    </div>
+    <nav class="theme-nav">
+      <a href="index.html" class="is-active"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 3 11v9a1 1 0 0 0 1 1h5.5a.5.5 0 0 0 .5-.5V15a2 2 0 0 1 4 0v5.5a.5.5 0 0 0 .5.5H20a1 1 0 0 0 1-1v-9l-9-7.5Z"/></svg></span><span>Inicio</span></a>
+      <!-- <a href="#sec-calc"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2a1 1 0 0 0-1 1v2H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a1 1 0 1 0-2 0v2H7V3a1 1 0 0 0-1-1Z"/></svg></span><span>Calculadora</span></a> -->
+      <!-- <a href="#stepper"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v4H5V5Zm0 5h14v4H5v-4Zm0 5h14v4H5v-4Z"/></svg></span><span>Stepper</span></a> -->
+      <a href="#resumen"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2a1 1 0 0 1 1 1v18a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm6 6a1 1 0 0 1 1 1v12a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1Zm6-4a1 1 0 0 1 1 1v16a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1Z"/></svg></span><span>Resultados</span></a>
+      <!-- <a href="#chatbot-panel"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H9.4L5 19.2V15.6A3 3 0 0 1 4 13V5Z"/></svg></span><span>Chatbot</span></a> -->
+    </nav>
+    <div class="theme-helper"><h3>Asistente Sanidad</h3><p>El convenio de clínicas y sanatorios ya usa la misma capa visual compartida.</p><a href="#chatbot-panel">Abrir asistente</a></div>
+  </aside>
+  <main class="theme-workspace">
+    <header class="theme-topbar">
+      <div class="theme-topbar__title"><h2>Clínicas y Sanatorios</h2><p>CCT 122/75 · interfaz consistente con todo el sistema</p></div>
+      <div class="theme-topbar__search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 4a6.5 6.5 0 0 1 5.1 10.5l4 4a1 1 0 0 1-1.4 1.4l-4-4A6.5 6.5 0 1 1 10.5 4Zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/></svg><input type="search" placeholder="Buscar categorías, guardias, adicionales y aportes..."><span class="theme-topbar__hint">Ctrl + K</span></div>
+      <div class="theme-topbar__actions"><a class="theme-action" href="index.html">Panel</a><button class="theme-action" type="button" onclick="abrirAdmin()">Admin</button><button class="theme-action" type="button" onclick="window.print()">Imprimir</button><div class="theme-user"><div class="theme-user__avatar">CS</div><div class="theme-user__info"><strong>Sanidad</strong><span>Liquidación 2026</span></div></div></div>
+    </header>
+    <div class="theme-page-shell">
+<header class="hdr"><a class="hdr-logo" href="inicioConvenios.html"><span style="font-weight:800;color:#fff;font-size:19px">e-Sueldos</span></a><div class="hdr-divider"></div><span class="hdr-title">Liquidador Clinicas y Sanatorios</span><span class="hdr-badge">CCT 122/75</span><div class="hdr-spacer"></div><div class="hdr-actions"><a class="hbtn" id="btn-panel" href="inicioConvenios.html" style="text-decoration:none"><i data-lucide="layout-dashboard" class="ico"></i>Panel principal</a><button class="hbtn" onclick="abrirChatbot()" id="btn-chatbot" style="background:rgba(255,255,255,.22);position:relative"><i data-lucide="bot" class="ico"></i>Asistente IA</button><button class="hbtn" onclick="abrirAdmin()"><i data-lucide="settings" class="ico"></i>Admin</button><button class="hbtn" onclick="window.print()"><i data-lucide="printer" class="ico"></i>Imprimir</button></div></header>
+<main class="page">
+  <div class="pg-title">Liquidador de sueldos - Clinicas y Sanatorios CCT 122/75</div>
+  <div class="pg-sub">FATSA - Sector asistencial privado - Escalas febrero, marzo y abril 2026</div>
+  <nav class="tabs"><button class="tab active" onclick="swMain('calc',this)">Calculadora</button><button class="tab" onclick="swMain('escala',this);rEscalas()">Escalas</button><button class="tab" onclick="swMain('ref',this)">Referencia</button></nav>
+  <section class="section active" id="sec-calc">
+    <div class="stepper" id="stepper"></div>
+    <div class="paso active" id="paso1"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">1</span>Trabajador</div></div><div class="fg"><div class="field"><label>Nombre</label><input id="p1n" placeholder="Ej: Maria Gonzalez"></div><div class="field"><label>CUIL</label><input id="p1c" placeholder="27-00000000-0"></div></div><div class="fg"><div class="field"><label>Fecha de ingreso</label><input type="date" id="p1i" onchange="calcAntig()"><div id="ha" class="hint"></div></div><div class="field"><label>Categoria</label><select id="p1cat" onchange="prevCat()"><option value="">Seleccione categoria</option></select></div></div><div id="prev" class="prev"></div><div class="nav-row"><span></span><button class="btn btn-primary" onclick="ip(2)">Continuar</button></div></div></div>
+    <div class="paso" id="paso2"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">2</span>Periodo</div></div><div class="fg"><div class="field"><label>Mes</label><select id="p2m" onchange="prevCat();rMini()"><option value="feb26">Febrero 2026</option><option value="mar26">Marzo 2026</option><option value="abr26">Abril 2026</option></select></div><div class="field"><label>Tipo de liquidacion</label><select id="p2q"><option value="mensual">Mensual</option><option value="1">1ra quincena</option><option value="2">2da quincena</option></select></div></div><div class="callout">El acuerdo fija basicos para febrero, marzo y abril 2026. La asignacion no remunerativa mensual es $80.000, $85.000 y $90.000 respectivamente.</div><div id="mini"></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(1)">Volver</button><button class="btn btn-primary" onclick="ip(3)">Continuar</button></div></div></div>
+    <div class="paso" id="paso3"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">3</span>Tiempo y ajustes</div></div><div class="fg g3"><div class="field"><label>Dias trabajados</label><input type="number" id="p3d" value="30" min="0" max="30"></div><div class="field"><label>Horas ordinarias mes</label><input type="number" id="p3h" value="200" min="1"><div class="hint">Divisor de referencia para horas extra</div></div><div class="field"><label>Intangibilidad / a cuenta</label><input type="number" id="p3acu" value="0"></div></div><div class="fg"><div class="field"><label>Inasistencias injustificadas (dias)</label><input type="number" id="p3inj" value="0" min="0" max="30"></div><div class="field"><label>Otros descuentos</label><input type="number" id="p3desc" value="0"></div></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(2)">Volver</button><button class="btn btn-primary" onclick="ip(4)">Continuar</button></div></div></div>
+    <div class="paso" id="paso4"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">4</span>Adicionales</div></div><div class="tw"><div><div class="ti-lbl">Antiguedad</div><div class="ti-sub">2% por ano sobre el basico</div></div><label class="tgl"><input type="checkbox" id="p4ant" checked><span class="tsl"></span></label></div><div class="tw"><div><div class="ti-lbl">Zona desfavorable</div><div class="ti-sub">25% sobre remuneraciones de convenio</div></div><label class="tgl"><input type="checkbox" id="p4zona"><span class="tsl"></span></label></div><div class="tw"><div><div class="ti-lbl">Terapia / UCO / nursery / rinon artificial</div><div class="ti-sub">20% enfermeria o personal especifico</div></div><label class="tgl"><input type="checkbox" id="p4ter20"><span class="tsl"></span></label></div><div class="tw"><div><div class="ti-lbl">Mucama o personal de area especial</div><div class="ti-sub">10% sobre basico</div></div><label class="tgl"><input type="checkbox" id="p4ter10"><span class="tsl"></span></label></div><div class="tw"><div><div class="ti-lbl">Area cerrada laboratorio</div><div class="ti-sub">30% sobre basico</div></div><label class="tgl"><input type="checkbox" id="p4area30"><span class="tsl"></span></label></div><div class="tw"><div><div class="ti-lbl">Titulo licenciatura salud</div><div class="ti-sub">15% sobre basico</div></div><label class="tgl"><input type="checkbox" id="p4lic15"><span class="tsl"></span></label></div><div class="fg" style="margin-top:14px"><div class="field"><label>Horas nocturnas</label><input type="number" id="p4hn" value="0" min="0"><div class="hint">10% adicional para horas entre 22 y 06</div></div><div class="field"><label>Otros adicionales remunerativos</label><input type="number" id="p4otros" value="0"></div></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(3)">Volver</button><button class="btn btn-primary" onclick="ip(5)">Continuar</button></div></div></div>
+    <div class="paso" id="paso5"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">5</span>Horas extra y no remunerativos</div></div><div class="fg"><div class="field"><label>Horas extra 50%</label><input type="number" id="p5h50" value="0" min="0"></div><div class="field"><label>Horas extra 100%</label><input type="number" id="p5h100" value="0" min="0"></div></div><div class="tw"><div><div class="ti-lbl">Asignacion no remunerativa mensual</div><div class="ti-sub">$80.000 feb, $85.000 mar, $90.000 abr</div></div><label class="tgl"><input type="checkbox" id="p5nr" checked><span class="tsl"></span></label></div><div class="tw"><div><div class="ti-lbl">Dia de la Sanidad</div><div class="ti-sub">Pago unico no remunerativo septiembre 2026: $63.369,91</div></div><label class="tgl"><input type="checkbox" id="p5ds"><span class="tsl"></span></label></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(4)">Volver</button><button class="btn btn-success" onclick="calcular()">Calcular</button></div></div></div>
+    <div class="paso" id="paso6"><div id="resumen"></div><div class="card"><div class="res-tabs"><button class="rt active" onclick="swRes('recibo',this)">Recibo</button><button class="rt" onclick="swRes('dist',this)">Distribucion</button><button class="rt" onclick="swRes('calc',this)">Detalle</button><button class="rt" onclick="swRes('costo',this)">Costo empleador</button></div><div id="res-recibo"></div><div id="res-dist" style="display:none"></div><div id="res-calc" style="display:none"></div><div id="res-costo" style="display:none"></div></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(5)">Volver</button><button class="btn btn-primary" onclick="editarCalculo()">Recalcular</button></div></div>
+  </section>
+  <section class="section" id="sec-escala"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">$</span>Escalas CCT 122/75</div></div><div class="field" style="max-width:260px;margin-bottom:12px"><label>Mes</label><select id="gmes" onchange="rEscalas()"><option value="feb26">Febrero 2026</option><option value="mar26">Marzo 2026</option><option value="abr26">Abril 2026</option></select></div><div class="box"><table class="dt"><thead><tr><th>Categoria</th><th>Grupo</th><th class="num">Basico</th><th class="num">Asig. NR</th></tr></thead><tbody id="tablaEscalas"></tbody></table></div></div></section>
+  <section class="section" id="sec-ref"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">i</span>Referencia de calculo</div></div><table class="dt"><tbody><tr><td>Antiguedad</td><td>2% anual sobre basico</td></tr><tr><td>Zona desfavorable</td><td>25%</td></tr><tr><td>Terapia / area especial</td><td>20%, 10% o 30% segun tarea</td></tr><tr><td>No remunerativo mensual</td><td>$80.000 feb, $85.000 mar, $90.000 abr</td></tr><tr><td>Dia de la Sanidad</td><td>$63.369,91 no remunerativo, pago unico septiembre 2026</td></tr><tr><td>Cuota solidaridad</td><td>1% remuneracion integral mensual</td></tr><tr><td>Contribucion extraordinaria empleador</td><td>$12.875 feb, $13.577 mar, $14.270 abr por trabajador</td></tr></tbody></table></div></section>
+  <div class="foot">e-Sueldos - CCT 122/75 Clinicas, Sanatorios, Geriatricos y Psiquiatricos. Herramienta referencial, verificar liquidacion final con profesional habilitado.</div>
+</main>
+</div>
+</main>
+</div>
+<div class="modal-bg" id="mAdmin"><div class="modal"><div class="modal-hdr"><h3>Panel de administracion</h3><button class="btn-ghost" onclick="cAdmin()">Cerrar</button></div><div id="aLogin"><div class="field"><label>Clave</label><input type="password" id="aPwd" placeholder="Clave admin" onkeydown="if(event.key==='Enter')lAdmin()"></div><button class="btn btn-primary" style="margin-top:12px" onclick="lAdmin()">Ingresar</button><div style="font-size:11px;color:var(--text-3);margin-top:8px">Contraseña por defecto: <strong>clinicas2026</strong></div></div><div id="aPanel" style="display:none"><div class="adm-tabs"><button class="adm-tab active" onclick="swAdm('e',this)">Escalas</button><button class="adm-tab" onclick="swAdm('c',this)">Constantes</button><button class="adm-tab" onclick="swAdm('p',this)">Clave</button></div><div id="adm-e"></div><div id="adm-c" style="display:none"></div><div id="adm-p" style="display:none"><div class="fg"><div class="field"><label>Nueva clave</label><input type="password" id="np1"></div><div class="field"><label>Repetir clave</label><input type="password" id="np2"></div></div><button class="btn btn-success" onclick="chPwd()">Guardar clave</button></div></div></div></div>
+<script>
+var CATS=[
+["bioq","A","Profesionales Bioquimicos, Nutricionistas, Farmaceuticos y Kinesiologos",1328002.30,1350578.34,1372187.59],["a_obs","A","Obstetricas e instrumentadoras",1207712.43,1228243.54,1247895.44],["b_cabcir","A","Cabos/as de cirugia",1207712.43,1228243.54,1247895.44],["c_cabpiso","A","Cabos/as de piso o pabellon",1186540.71,1206711.91,1226019.30],["d_enfcir","A","Enfermeros/as de cirugia y esterilizacion",1154784.31,1174415.65,1193206.30],["e_rx","A","Auxiliar tecnico de Rayos X",1154784.31,1174415.65,1193206.30],["f_ped","A","Pedicuros y masajistas",1154784.31,1174415.65,1193206.30],["h_enfpiso","A","Enfermero/a de piso o consultorios externos",1123022.14,1142113.52,1160387.33],["i_terapia","A","Personal especializado terapia, UCO, nursery, foniatria y rinon artificial",1123022.14,1142113.52,1160387.33],["j_mental","A","Personal atencion enfermos mentales y nerviosos",1123022.14,1142113.52,1160387.33],["g_teclab","A","Tecnico hemoterapia, fisioterapia, anatomia patologica y laboratorio",1073623.30,1091874.90,1109344.90],["k_ayudlab","A","Ayudante radiologia, fisioterapia, hemoterapia y laboratorio",1073623.30,1091874.90,1109344.90],["ll_muc","A","Mucamas de cirugia o sin atingencia con enfermos",997751.96,1014713.74,1030949.16],["l_geri","A","Asistente geriatrica",976580.63,993182.50,1009073.42],["m_com","A","Asistente de comedores con atencion al publico",971288.70,987800.61,1003605.42],["n_cam","A","Camilleros y fotografos",971288.70,987800.61,1003605.42],["enie_lav","A","Personal de lavadero y roperia",955408.37,971650.31,987196.72],["o_mucpiso","A","Mucamas de piso, consultorios externos y geriatricos",950117.76,966269.76,981730.08],
+["b_of","B","Oficiales",1092146.44,1110712.93,1128484.34],["b_mof","B","Medio oficiales",1028622.42,1046109.00,1062846.74],["b_aps","B","Ascensoristas, porteros y serenos",987165.44,1003947.25,1020010.41],["b_jard","B","Jardineros",950117.76,966269.76,981730.08],["b_peon","B","Peones en general",971288.70,987800.61,1003605.42],
+["c_pcoc","C","Primer cocinero/repostero/fiambrero",1092146.44,1110712.93,1128484.34],["c_scoc","C","Segundo cocinero/repostero/fiambrero",1032155.82,1049702.46,1066497.70],["c_cgeri","C","Cocinero/a establecimientos geriatricos",1032155.82,1049702.46,1066497.70],["c_office","C","Encargado/a de office, cafeteros y despacho cocina",1032155.82,1049702.46,1066497.70],["c_ayud","C","Ayudante de cocina y cacerolero",1010985.63,1028172.38,1044623.14],["c_peon","C","Peones de cocina en general",950117.76,966269.76,981730.08],
+["d_adm1","D","Administrativo de primera",1063033.92,1081105.50,1098403.19],["d_adm2","D","Administrativo de segunda",1032155.82,1049702.46,1066497.70],["d_adm3","D","Administrativo de tercera",1001281.30,1018303.09,1034595.93],["d_cad","D","Cadete",892768.76,907945.83,922472.96],["g_auxenf","Geriatricos","Auxiliar de enfermeria",1018039.35,1035346.02,1051911.55]
+].map(function(r){return{id:r[0],grupo:r[1],lbl:r[2],feb26:r[3],mar26:r[4],abr26:r[5]}});
+var NR={feb26:80000,mar26:85000,abr26:90000},C={DETSS:7003.68,ART_F:1450,ART_V:.6,SCVO:424.62,EXTRA_EMP:{feb26:12875,mar26:13577,abr26:14270},DIA_SANIDAD:63369.91,PWD:"clinicas2026"};
+function p(n){return isNaN(n)?"$0":"$"+Math.round(n).toLocaleString("es-AR")}function gv(id){var e=document.getElementById(id);return e?e.value:""}function gn(id,d){var v=parseFloat(gv(id));return isNaN(v)?(d||0):v}function gc(id){var e=document.getElementById(id);return e?e.checked:false}function cat(id){return CATS.find(function(c){return c.id===id})||null}function bas(m,id){var c=cat(id);return c?c[m]||0:0}function ml(m){return{feb26:"Febrero 2026",mar26:"Marzo 2026",abr26:"Abril 2026"}[m]||m}
+function calcAntig(){var i=gv("p1i"),h=document.getElementById("ha");if(!i){h.textContent="";return 0}var hoy=new Date(),d=new Date(i),a=hoy.getFullYear()-d.getFullYear(),m=hoy.getMonth()-d.getMonth();if(m<0||(m===0&&hoy.getDate()<d.getDate()))a--;a=Math.max(0,a);h.className="hint ok";h.textContent=a+" ano(s) - "+(a*2)+"%";return a}
+function prevCat(){var c=cat(gv("p1cat")),m=gv("p2m")||"feb26",box=document.getElementById("prev");if(!c){box.classList.remove("show");return}box.innerHTML="<strong>"+c.lbl+" - "+ml(m)+"</strong><div class='prev-grid'><div class='pi'><span>Grupo</span><span class='pv'>"+c.grupo+"</span></div><div class='pi'><span>Basico</span><span class='pv'>"+p(c[m])+"</span></div><div class='pi'><span>No remunerativo</span><span class='pv'>"+p(NR[m])+"</span></div><div class='pi'><span>Dia</span><span class='pv'>"+p(c[m]/30)+"</span></div></div>";box.classList.add("show")}
+var pN=1,ST=["Trabajador","Periodo","Tiempo","Adicionales","Extras","Resultado"];function rStepper(){var h="";ST.forEach(function(l,i){var n=i+1,cls=n<pN?"done":n===pN?"active":"";h+="<div class='step "+cls+"'><div class='step-num'>"+(n<pN?"✓":n)+"</div><div class='step-lbl'>"+l+"</div></div>";if(n<ST.length)h+="<div class='step-line "+(n<pN?"done":"")+"'></div>"});document.getElementById("stepper").innerHTML=h}function ip(n){document.getElementById("paso"+pN).classList.remove("active");pN=n;document.getElementById("paso"+pN).classList.add("active");rStepper();window.scrollTo(0,0)}function editarCalculo(){ip(1)}
+function swMain(s,b){document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("active")});b.classList.add("active");document.querySelectorAll(".section").forEach(function(x){x.classList.remove("active")});document.getElementById("sec-"+s).classList.add("active")}function swRes(s,b){document.querySelectorAll(".rt").forEach(function(x){x.classList.remove("active")});b.classList.add("active");["recibo","dist","calc","costo"].forEach(function(x){document.getElementById("res-"+x).style.display=x===s?"block":"none"})}
+function calcular(){var c=cat(gv("p1cat"));if(!c){alert("Seleccione categoria");ip(1);return}var m=gv("p2m")||"feb26",liq=gv("p2q")||"mensual",dias=liq==="mensual"?gn("p3d",30):15,base=c[m]*(dias/30),inj=Math.min(30,gn("p3inj",0)),desc=gn("p3desc",0),dInj=c[m]/30*inj,basico=Math.max(0,base-dInj),ant=calcAntig(),mAnt=gc("p4ant")?basico*(ant*2)/100:0,acu=gn("p3acu",0),zona=gc("p4zona")?basico*.25:0,ter20=gc("p4ter20")?basico*.20:0,ter10=gc("p4ter10")?basico*.10:0,area30=gc("p4area30")?basico*.30:0,lic15=gc("p4lic15")?basico*.15:0,otros=gn("p4otros",0),hOrd=Math.max(1,gn("p3h",200)),vHora=(basico+mAnt+zona+ter20+ter10+area30+lic15+acu)/hOrd,noct=gn("p4hn",0)*vHora*.10,he50=gn("p5h50",0)*vHora*1.5,he100=gn("p5h100",0)*vHora*2,tRem=basico+mAnt+acu+zona+ter20+ter10+area30+lic15+noct+otros+he50+he100,prop=dias/30,tNR=(gc("p5nr")?NR[m]*prop:0)+(gc("p5ds")?C.DIA_SANIDAD:0),bruto=tRem+tNR,bSS=Math.max(0,tRem-C.DETSS),bIntegral=bruto;
+var aJ=bSS*.11,aP=bSS*.03,aOS=bIntegral*.03,aSol=bIntegral*.01,tDed=aJ+aP+aOS+aSol+desc,neto=bruto-tDed,cJ=bSS*.1077,cP=bSS*.0158,cOS=bIntegral*.06,cAF=bSS*.047,cFN=bSS*.0095,cART=tRem*C.ART_V/100+C.ART_F,cSC=C.SCVO,cExtra=C.EXTRA_EMP[m]||0,tCont=cJ+cP+cOS+cAF+cFN+cART+cSC+cExtra;
+document.getElementById("resumen").innerHTML="<div class='stat-grid'><div class='sc'><div class='sl'>Remunerativo</div><div class='sv'>"+p(tRem)+"</div><div class='ss'>"+c.lbl+"</div></div><div class='sc'><div class='sl'>No remunerativo</div><div class='sv' style='color:var(--warn)'>"+p(tNR)+"</div><div class='ss'>Asignaciones</div></div><div class='sc'><div class='sl'>Deducciones</div><div class='sv' style='color:var(--err)'>"+p(tDed)+"</div><div class='ss'>Aportes trabajador</div></div><div class='sc'><div class='sl' style='color:var(--azul)'>Neto</div><div class='sv' style='color:var(--azul)'>"+p(neto)+"</div><div class='ss'>"+ml(m)+"</div></div></div>";
+function rr(t,v,cl){return"<div class='row'><span>"+t+"</span><span class='rm "+cl+"'>"+p(v)+"</span></div>"}var rec="<div class='rec-hdr'><div class='rec-emp'>"+(gv("p1n")||"Sin nombre")+"</div><div class='rec-meta'><span>CUIL: "+(gv("p1c")||"-")+"</span><span>"+c.lbl+"</span><span>"+ml(m)+"</span></div></div><div class='rec-cols'><div class='rec-block'><h4>Haberes remunerativos</h4>"+rr("Sueldo basico",basico,"pos");if(mAnt)rec+=rr("Antiguedad "+(ant*2)+"%",mAnt,"pos");if(acu)rec+=rr("Intangibilidad / a cuenta",acu,"pos");if(zona)rec+=rr("Zona desfavorable 25%",zona,"pos");if(ter20)rec+=rr("Terapia / area especial 20%",ter20,"pos");if(ter10)rec+=rr("Area especial 10%",ter10,"pos");if(area30)rec+=rr("Area cerrada 30%",area30,"pos");if(lic15)rec+=rr("Licenciatura 15%",lic15,"pos");if(noct)rec+=rr("Adicional nocturno",noct,"pos");if(otros)rec+=rr("Otros adicionales",otros,"pos");if(he50)rec+=rr("Horas extra 50%",he50,"pos");if(he100)rec+=rr("Horas extra 100%",he100,"pos");rec+="<div class='sub'><span>Total remunerativo</span><span>"+p(tRem)+"</span></div></div><div class='rec-block'><h4>Deducciones</h4>"+rr("Jubilacion 11%",-aJ,"neg")+rr("Ley 19.032 3%",-aP,"neg")+rr("Obra social 3%",-aOS,"neg")+rr("Cuota solidaridad 1%",-aSol,"neg");if(desc)rec+=rr("Otros descuentos",-desc,"neg");rec+="<div class='sub'><span>Total deducciones</span><span>"+p(tDed)+"</span></div></div></div>";if(tNR)rec+="<div class='nr'>"+rr("Asignaciones no remunerativas",tNR,"pos")+"</div>";rec+="<div class='tot'><div class='tot-row'><span>Bruto total</span><span>"+p(bruto)+"</span></div><div class='tot-row'><span>Deducciones</span><span>-"+p(tDed)+"</span></div><div class='tot-row main'><span>Neto a pagar</span><span>"+p(neto)+"</span></div></div>";document.getElementById("res-recibo").innerHTML=rec;
+var labels=["Basico","Antiguedad","Adic. CCT","Extras","No Rem."],vals=[basico,mAnt,zona+ter20+ter10+area30+lic15+noct+acu+otros,he50+he100,tNR],cols=["#1565C0","#0D47A1","#1976D2","#0277BD","#42A5F5"],html="<div class='chart-wrap'><canvas id='chart'></canvas></div><table class='dt'><tbody>";labels.forEach(function(l,i){if(vals[i]>0)html+="<tr><td>"+l+"</td><td class='num'>"+p(vals[i])+"</td><td class='num'>"+Math.round(vals[i]/(bruto||1)*100)+"%</td></tr>"});html+="</tbody></table>";document.getElementById("res-dist").innerHTML=html;setTimeout(function(){var ctx=document.getElementById("chart");if(ctx&&window.Chart)new Chart(ctx,{type:"doughnut",data:{labels:labels,datasets:[{data:vals,backgroundColor:cols,borderColor:"#fff",borderWidth:2}]},options:{plugins:{legend:{position:"bottom"}},cutout:"65%"}})},50);
+document.getElementById("res-calc").innerHTML="<div class='cs'><div class='ct'>Basico proporcional</div><div class='cf'>Basico escala / 30 x dias - inasistencias</div><div class='cr'>"+p(basico)+"</div></div><div class='cs'><div class='ct'>Valor hora</div><div class='cf'>Remuneracion ordinaria / horas ordinarias</div><div class='cr'>"+p(vHora)+"</div></div><div class='cs'><div class='ct'>Base integral para OS y solidaridad</div><div class='cf'>Remunerativo + no remunerativo</div><div class='cr'>"+p(bIntegral)+"</div></div>";
+document.getElementById("res-costo").innerHTML="<div class='box'><table class='dt'><tbody><tr><td>SIPA empleador 10,77%</td><td class='num'>"+p(cJ)+"</td></tr><tr><td>INSSJP empleador 1,58%</td><td class='num'>"+p(cP)+"</td></tr><tr><td>Obra social empleador 6%</td><td class='num'>"+p(cOS)+"</td></tr><tr><td>Asignaciones familiares 4,70%</td><td class='num'>"+p(cAF)+"</td></tr><tr><td>FNE 0,95%</td><td class='num'>"+p(cFN)+"</td></tr><tr><td>ART</td><td class='num'>"+p(cART)+"</td></tr><tr><td>SCVO</td><td class='num'>"+p(cSC)+"</td></tr><tr><td>Contribucion extraordinaria FATSA</td><td class='num'>"+p(cExtra)+"</td></tr><tr><th>Total contribuciones</th><th class='num'>"+p(tCont)+"</th></tr><tr><th>Costo total</th><th class='num'>"+p(bruto+tCont)+"</th></tr></tbody></table></div>";ip(6)}
+function rMini(){var m=gv("p2m")||"feb26",h="<div class='box'><table class='dt'><thead><tr><th>Categoria</th><th class='num'>Basico</th></tr></thead><tbody>";CATS.slice(0,8).forEach(function(c){h+="<tr><td>"+c.lbl+"</td><td class='num'>"+p(c[m])+"</td></tr>"});h+="</tbody></table></div>";document.getElementById("mini").innerHTML=h}function rEscalas(){var m=gv("gmes")||"feb26",h="";CATS.forEach(function(c){h+="<tr><td>"+c.lbl+"</td><td>"+c.grupo+"</td><td class='num'>"+p(c[m])+"</td><td class='num'>"+p(NR[m])+"</td></tr>"});document.getElementById("tablaEscalas").innerHTML=h}
+function ldS(){try{var cats=localStorage.getItem("clin_cats"),nr=localStorage.getItem("clin_nr"),cons=localStorage.getItem("clin_c");if(cats)CATS=JSON.parse(cats);if(nr)NR=JSON.parse(nr);if(cons){var co=JSON.parse(cons);for(var k in co)C[k]=co[k]}}catch(e){}}
+function svS(){try{localStorage.setItem("clin_cats",JSON.stringify(CATS));localStorage.setItem("clin_nr",JSON.stringify(NR));localStorage.setItem("clin_c",JSON.stringify(C))}catch(e){}}
+function abrirAdmin(){document.getElementById("mAdmin").classList.add("open");document.getElementById("aLogin").style.display="block";document.getElementById("aPanel").style.display="none";document.getElementById("aPwd").value=""}
+function cAdmin(){document.getElementById("mAdmin").classList.remove("open")}
+function lAdmin(){if(document.getElementById("aPwd").value===C.PWD){document.getElementById("aLogin").style.display="none";document.getElementById("aPanel").style.display="block";rAdmE();rAdmC()}else alert("Clave incorrecta")}
+function chPwd(){var p1=gv("np1"),p2=gv("np2");if(!p1||p1!==p2){alert("Las claves no coinciden");return}C.PWD=p1;svS();alert("Clave actualizada")}
+function swAdm(tab,btn){document.querySelectorAll(".adm-tab").forEach(function(t){t.classList.remove("active")});btn.classList.add("active");["e","c","p"].forEach(function(t){document.getElementById("adm-"+t).style.display=t===tab?"block":"none"})}
+function rAdmE(){var ms=["feb26","mar26","abr26"],h="<div class='callout'>Edicion rapida de basicos y asignaciones no remunerativas.</div><div class='fg g3'>";ms.forEach(function(m){h+="<div class='field'><label>NR "+ml(m)+"</label><input type='number' value='"+NR[m]+"' onchange=\"NR['"+m+"']=parseFloat(this.value)||0\"></div>"});h+="</div>";ms.forEach(function(m){h+="<div style='font-weight:800;font-size:12px;color:var(--azul);margin:12px 0 7px'>"+ml(m)+"</div><div class='box'><table class='dt'><thead><tr><th>Categoria</th><th>Grupo</th><th class='num'>Basico</th></tr></thead><tbody>";CATS.forEach(function(c,ci){h+="<tr><td>"+c.lbl+"</td><td>"+c.grupo+"</td><td><input type='number' value='"+c[m]+"' onchange=\"CATS["+ci+"]."+m+"=parseFloat(this.value)||0\" style='width:130px'></td></tr>"});h+="</tbody></table></div>"});h+="<button class='btn btn-success btn-sm' style='margin-top:12px' onclick=\"svS();rEscalas();rMini();prevCat();alert('Escalas guardadas')\">Guardar escalas</button>";document.getElementById("adm-e").innerHTML=h}
+function rAdmC(){var f=[["DETSS","Detraccion SS"],["ART_V","ART variable %"],["ART_F","ART fija"],["SCVO","SCVO"],["DIA_SANIDAD","Dia de la Sanidad"],["EXTRA_EMP_feb26","Contrib. FATSA febrero"],["EXTRA_EMP_mar26","Contrib. FATSA marzo"],["EXTRA_EMP_abr26","Contrib. FATSA abril"]],h="<div class='fg'>";f.forEach(function(x){var v=x[0].indexOf("EXTRA_EMP_")===0?C.EXTRA_EMP[x[0].replace("EXTRA_EMP_","")]:C[x[0]];h+="<div class='field'><label>"+x[1]+"</label><input type='number' id='ac_"+x[0]+"' value='"+v+"'></div>"});h+="</div><button class='btn btn-success btn-sm' onclick='svCons()'>Guardar constantes</button>";document.getElementById("adm-c").innerHTML=h}
+function svCons(){["DETSS","ART_V","ART_F","SCVO","DIA_SANIDAD"].forEach(function(k){var e=document.getElementById("ac_"+k);if(e)C[k]=parseFloat(e.value)||0});["feb26","mar26","abr26"].forEach(function(m){var e=document.getElementById("ac_EXTRA_EMP_"+m);if(e)C.EXTRA_EMP[m]=parseFloat(e.value)||0});svS();alert("Constantes guardadas")}
+function init(){ldS();var s=document.getElementById("p1cat");CATS.forEach(function(c){var o=document.createElement("option");o.value=c.id;o.textContent=c.lbl;s.appendChild(o)});rStepper();rMini();document.getElementById("mAdmin").addEventListener("click",function(e){if(e.target===this)cAdmin()});if(window.lucide)lucide.createIcons()}init();
+ </script>
+
+<div id="chatbot-panel">
+  <div class="cb-head">
+    <div class="cb-avatar">IA</div>
+    <div class="cb-info">
+      <div class="cb-name">Asistente Clinicas y Sanatorios</div>
+      <div class="cb-status"><span class="cb-dot"></span>Gemini - Especialista en liquidacion</div>
+    </div>
+    <button class="cb-close" onclick="cerrarChatbot()">x</button>
+  </div>
+  <div class="cb-powered">Powered by Google Gemini 2.5 Flash</div>
+
+  <div class="cb-api-warning" id="cb-warn">
+    Ingresa tu API Key de Google Gemini para usar el asistente.
+  </div>
+  <div class="cb-api-input-row" id="cb-apirow">
+    <input id="cb-apikey" type="password" placeholder="AIza... (Google Gemini API Key)">
+    <button id="cb-save-key" onclick="guardarApiKey()">Guardar</button>
+  </div>
+
+  <div class="cb-msgs" id="cb-msgs"></div>
+
+  <div class="cb-quick" id="cb-quick">
+    <span class="cb-chip" onclick="cbChip(this)">Como se calcula la antiguedad?</span>
+    <span class="cb-chip" onclick="cbChip(this)">Que adicionales tiene el CCT 122/75?</span>
+    <span class="cb-chip" onclick="cbChip(this)">Como se calcula la asignacion no remunerativa?</span>
+    <span class="cb-chip" onclick="cbChip(this)">Que deducciones tiene el trabajador?</span>
+  </div>
+
+  <div class="cb-input-row">
+    <input id="cb-input" type="text" placeholder="Consulta sobre liquidacion CCT 122/75..." onkeydown="if(event.key==='Enter')cbEnviar()">
+    <button id="cb-send" onclick="cbEnviar()">></button>
+  </div>
+</div>
+
+<script>
+var GEMINI_MODEL = (window.GEMINI_CONFIG && window.GEMINI_CONFIG.MODEL) || "gemini-2.5-flash";
+var GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models/";
+var cbHistory = [];
+var cbLoading = false;
+var geminiKey = (window.GEMINI_CONFIG && window.GEMINI_CONFIG.API_KEY ? window.GEMINI_CONFIG.API_KEY.trim() : "") || localStorage.getItem("gemini_key") || "";
+
+function geminiApiUrl(){return GEMINI_API_BASE + GEMINI_MODEL + ":generateContent"}
+
+var SYSTEM_PROMPT = "Sos un asistente especializado en liquidacion de sueldos de Clinicas, Sanatorios, Geriatricos y Psiquiatricos bajo el CCT 122/75 de Argentina. Responde siempre en espanol claro, practico y orientado a liquidadores. Usa como contexto esta calculadora: categorias FATSA por grupos A, B, C, D y Geriatricos; escalas febrero, marzo y abril 2026; asignacion no remunerativa mensual de $80.000 en febrero, $85.000 en marzo y $90.000 en abril; Dia de la Sanidad no remunerativo de $63.369,91; antiguedad 2% por ano sobre basico; zona desfavorable 25%; terapia, UCO, nursery, foniatria y rinon artificial 20%; mucama o personal de area especial 10%; area cerrada laboratorio 30%; titulo licenciatura salud 15%; adicional nocturno 10%; horas extra 50% y 100%; aportes trabajador: jubilacion 11%, Ley 19.032 3%, obra social 3% sobre remunerativo mas no remunerativo, cuota solidaridad 1%; contribuciones empleador: SIPA 10,77%, INSSJP 1,58%, obra social 6%, asignaciones familiares 4,70%, FNE 0,95%, ART variable mas fija, SCVO y contribucion extraordinaria FATSA por trabajador. Si el usuario pide un calculo, pedi los datos faltantes o hacelo con supuestos explicitos. Aclara que es una herramienta referencial y que la liquidacion final debe verificarse con normativa vigente y profesional habilitado.";
+
+function initChatbot(){
+  if(!geminiKey){
+    document.getElementById("cb-warn").classList.add("show");
+    document.getElementById("cb-apirow").classList.add("show");
+    document.getElementById("cb-send").disabled=true;
+    document.getElementById("cb-input").disabled=true;
+  }else{
+    cbMensajeBienvenida();
+  }
+}
+
+function cbMensajeBienvenida(){
+  cbAgregarMensaje("bot","Hola. Soy tu asistente para liquidacion de Clinicas y Sanatorios CCT 122/75. Puedo ayudarte con basicos, adicionales, no remunerativos, aportes, contribuciones, horas extra y armado del recibo. Que necesitas consultar?");
+}
+
+function guardarApiKey(){
+  var k=document.getElementById("cb-apikey").value.trim();
+  if(!k||!k.startsWith("AIza")){
+    alert("La API Key de Gemini debe comenzar con 'AIza'. Obtenela en Google AI Studio.");
+    return;
+  }
+  geminiKey=k;
+  localStorage.setItem("gemini_key",k);
+  document.getElementById("cb-warn").classList.remove("show");
+  document.getElementById("cb-apirow").classList.remove("show");
+  document.getElementById("cb-send").disabled=false;
+  document.getElementById("cb-input").disabled=false;
+  document.getElementById("cb-apikey").value="";
+  cbMensajeBienvenida();
+}
+
+function abrirChatbot(){
+  var panel=document.getElementById("chatbot-panel");
+  panel.classList.add("open");
+  if(cbHistory.length===0&&geminiKey)cbMensajeBienvenida();
+  else if(cbHistory.length===0)initChatbot();
+  setTimeout(function(){document.getElementById("cb-input").focus()},300);
+}
+function cerrarChatbot(){document.getElementById("chatbot-panel").classList.remove("open")}
+
+function cbChip(el){
+  document.getElementById("cb-input").value=el.textContent;
+  cbEnviar();
+}
+
+function cbEnviar(){
+  if(cbLoading)return;
+  var input=document.getElementById("cb-input");
+  var text=input.value.trim();
+  if(!text)return;
+  if(!geminiKey){abrirChatbot();return}
+  input.value="";
+  cbAgregarMensaje("usr",text);
+  cbHistory.push({role:"user",parts:[{text:text}]});
+  document.getElementById("cb-quick").style.display="none";
+  cbShowTyping();
+  cbLoading=true;
+  document.getElementById("cb-send").disabled=true;
+  var body={system_instruction:{parts:[{text:SYSTEM_PROMPT}]},contents:cbHistory.slice(-8),generationConfig:{temperature:.4,maxOutputTokens:800}};
+  fetch(geminiApiUrl()+"?key="+geminiKey,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+  .then(function(r){return r.json()})
+  .then(function(data){
+    cbHideTyping();
+    cbLoading=false;
+    document.getElementById("cb-send").disabled=false;
+    if(data.error){cbAgregarMensaje("bot",cbMensajeErrorApi(data.error));return}
+    var reply=data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0].text;
+    if(!reply){cbAgregarMensaje("bot","No pude obtener una respuesta. Intenta de nuevo.");return}
+    cbHistory.push({role:"model",parts:[{text:reply}]});
+    cbAgregarMensaje("bot",reply);
+  })
+  .catch(function(err){
+    cbHideTyping();
+    cbLoading=false;
+    document.getElementById("cb-send").disabled=false;
+    cbAgregarMensaje("bot","Error de conexion: "+err.message);
+  });
+}
+
+function cbMensajeErrorApi(error){
+  var msg=(error&&error.message)?error.message:"Error desconocido de Gemini.";
+  var code=error&&(error.status||error.code);
+  var lower=msg.toLowerCase();
+  if(code==="UNAVAILABLE"||lower.indexOf("high demand")!==-1||lower.indexOf("try again later")!==-1||lower.indexOf("temporar")!==-1)return "Gemini esta con alta demanda en este momento. No es un problema de tu configuracion ni de la clave; espera unos minutos y volve a intentar. Detalle: "+msg;
+  if(code==="RESOURCE_EXHAUSTED"||lower.indexOf("quota")!==-1||lower.indexOf("rate")!==-1)return "Gemini rechazo la consulta por cuota o limite del proyecto. Revisa plan, billing y cuotas. Detalle: "+msg;
+  if(code==="PERMISSION_DENIED"||code==="UNAUTHENTICATED"||lower.indexOf("api key")!==-1)return "La API Key no fue aceptada por Gemini. Verifica que sea de Google AI Studio y que la API este habilitada. Detalle: "+msg;
+  if(code===404||code==="NOT_FOUND"||lower.indexOf("model")!==-1)return "Gemini no encontro el modelo configurado ("+GEMINI_MODEL+"). Detalle: "+msg;
+  return "Error de API: "+msg;
+}
+
+function cbEscape(text){
+  return text.replace(/[&<>"']/g,function(ch){return({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[ch]});
+}
+
+function cbAgregarMensaje(role,text){
+  var msgs=document.getElementById("cb-msgs");
+  var now=new Date();
+  var hora=now.getHours().toString().padStart(2,"0")+":"+now.getMinutes().toString().padStart(2,"0");
+  var formatted=cbEscape(text).replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/\*(.*?)\*/g,"<em>$1</em>").replace(/\n/g,"<br>");
+  var div=document.createElement("div");
+  div.className="msg "+role;
+  div.innerHTML='<div class="msg-bubble">'+formatted+'</div><div class="msg-time">'+hora+'</div>';
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function cbShowTyping(){
+  var msgs=document.getElementById("cb-msgs");
+  var t=document.createElement("div");
+  t.id="cb-typing";
+  t.className="cb-typing";
+  t.innerHTML="<span></span><span></span><span></span>";
+  msgs.appendChild(t);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function cbHideTyping(){var t=document.getElementById("cb-typing");if(t)t.remove()}
+</script>
+</body>
+</html>

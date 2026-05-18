@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>e-Sueldos - Call Center CCT 781/20</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/theme.css">
+<script src="config/gemini-config.js"></script>
+<style>
+:root{--azul:#5f67ff;--azul-dk:#4b59ff;--azul-xdk:#7b4dff;--azul-lt:#eef0ff;--azul-mid:#9ca4ff;--ok:#2E7D32;--warn:#E65100;--err:#B71C1C;--bg:#f4f7ff;--surface:#fff;--border:#d9e2ff;--text:#18264d;--text-2:#53648f;--text-3:#8a97bb;--radius:22px;--shadow:0 16px 36px rgba(71,95,180,.10);--font:"Plus Jakarta Sans",sans-serif;--mono:"JetBrains Mono",monospace;--max-w:1280px}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14px}.hdr{background:var(--azul);height:60px;display:flex;align-items:center;padding:0 28px;gap:14px;position:sticky;top:0;z-index:20;box-shadow:0 2px 12px rgba(0,0,0,.2)}.logo{font-weight:800;color:#fff;font-size:19px}.hdr-title{color:#fff;font-size:14px;font-weight:700}.badge{background:rgba(255,255,255,.18);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px}.spacer{flex:1}.hbtn{height:34px;border-radius:7px;background:rgba(255,255,255,.12);border:0;color:#fff;font-weight:800;padding:0 14px;cursor:pointer;font-family:var(--font);display:inline-flex;align-items:center;justify-content:center;line-height:1;text-decoration:none;white-space:nowrap}.page{max-width:var(--max-w);margin:0 auto;padding:28px 16px 48px}.pg-title{font-size:22px;font-weight:800;letter-spacing:-.4px}.pg-sub{font-size:13px;color:var(--text-3);margin-top:5px}.tabs{display:flex;gap:4px;margin:20px 0;background:var(--surface);padding:5px;border-radius:var(--radius);width:fit-content;border:1px solid var(--border);box-shadow:var(--shadow)}.tab{padding:8px 18px;border:0;border-radius:7px;background:transparent;color:var(--text-3);font-weight:800;cursor:pointer;font-family:var(--font)}.tab.active{background:var(--azul);color:#fff}.section{display:none}.section.active{display:block}.stepper{display:flex;align-items:center;background:var(--surface);border-radius:var(--radius);padding:14px 18px;box-shadow:var(--shadow);margin-bottom:18px;border:1px solid var(--border);overflow-x:auto}.step{display:flex;align-items:center;gap:8px}.step-line{flex:1;height:2px;background:var(--border);min-width:14px}.step-line.done{background:var(--azul-mid)}.step-num{width:30px;height:30px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:12px;font-weight:800}.step.active .step-num{background:var(--azul);border-color:var(--azul);color:#fff}.step.done .step-num{background:var(--azul-dk);border-color:var(--azul-dk);color:#fff}.step-lbl{font-size:11px;font-weight:700;color:var(--text-3);white-space:nowrap}.step.active .step-lbl{color:var(--azul)}.card{background:var(--surface);border-radius:var(--radius);padding:22px 24px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:16px}.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;padding-bottom:14px;border-bottom:1.5px solid var(--border)}.card-title{font-size:15px;font-weight:800;display:flex;gap:9px;align-items:center}.ic{width:28px;height:28px;border-radius:7px;background:var(--azul-lt);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--azul)}.fg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:12px}.fg.g3{grid-template-columns:1fr 1fr 1fr}.field{display:flex;flex-direction:column;gap:5px}.field label{font-size:11px;font-weight:800;color:var(--text-2);text-transform:uppercase;letter-spacing:.5px}.field input,.field select{border:1.5px solid var(--border);border-radius:7px;padding:9px 12px;font:13px var(--font);color:var(--text);background:#fff;width:100%}.field input:focus,.field select:focus{outline:0;border-color:var(--azul);box-shadow:0 0 0 3px rgba(21,101,192,.1)}.hint{font-size:11px;color:var(--text-3)}.hint.ok{color:var(--ok);font-weight:700}.callout{background:#E1F5FE;border-left:3px solid #0277BD;color:#0277BD;padding:11px 15px;border-radius:8px;font-size:12px;line-height:1.6;margin-bottom:14px}.prev{display:none;background:var(--azul-lt);border:1.5px solid var(--azul-mid);border-radius:8px;padding:12px 16px;margin:10px 0}.prev.show{display:block}.prev strong{display:block;font-size:10px;color:var(--azul);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}.prev-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}.pi{display:flex;justify-content:space-between;font-size:12px}.pv{font-family:var(--mono);font-weight:800;color:var(--azul)}.tw{display:flex;justify-content:space-between;gap:14px;align-items:center;border-bottom:1px solid var(--border);padding:11px 0}.tw:last-child{border-bottom:0}.ti-lbl{font-weight:700}.ti-sub{font-size:11px;color:var(--text-3);margin-top:2px}.tgl{position:relative;width:40px;height:22px;flex-shrink:0}.tgl input{opacity:0}.tsl{position:absolute;inset:0;background:#CBD5E0;border-radius:22px;cursor:pointer}.tsl:before{content:"";position:absolute;width:16px;height:16px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}input:checked+.tsl{background:var(--azul)}input:checked+.tsl:before{transform:translateX(18px)}.btn{padding:9px 20px;border:0;border-radius:8px;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--font)}.btn-primary{background:var(--azul);color:#fff}.btn-secondary{background:#fff;color:var(--text);border:1.5px solid var(--border)}.btn-success{background:var(--ok);color:#fff}.nav-row{display:flex;justify-content:space-between;margin-top:8px}.paso{display:none}.paso.active{display:block}.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.sc{background:#fff;border-radius:var(--radius);padding:15px 16px;border:1px solid var(--border);box-shadow:var(--shadow)}.sl{font-size:10px;font-weight:800;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px}.sv{font-size:18px;font-weight:800;font-family:var(--mono);margin-top:5px}.ss{font-size:11px;color:var(--text-3);margin-top:3px}.res-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}.rt{padding:7px 16px;border:1.5px solid var(--border);background:#fff;border-radius:20px;font-size:12px;font-weight:800;cursor:pointer;color:var(--text-2);font-family:var(--font)}.rt.active{background:var(--azul);color:#fff;border-color:var(--azul)}.rec-hdr{background:linear-gradient(135deg,var(--azul-xdk),var(--azul));color:#fff;padding:18px 22px;border-radius:var(--radius);margin-bottom:16px}.rec-emp{font-size:18px;font-weight:800}.rec-meta{font-size:12px;opacity:.85;margin-top:5px;display:flex;gap:14px;flex-wrap:wrap}.rec-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}.rec-block h4{font-size:10px;text-transform:uppercase;letter-spacing:.6px;border-bottom:1.5px solid var(--border);padding-bottom:8px;margin-bottom:8px;color:var(--text-3)}.row{display:flex;justify-content:space-between;gap:8px;padding:4px 0;border-bottom:1px solid #F5F7FA}.rm{font-family:var(--mono);font-weight:800;min-width:120px;text-align:right}.pos{color:var(--ok)}.neg{color:var(--err)}.sub{display:flex;justify-content:space-between;background:var(--azul-lt);color:var(--azul);font-weight:800;border-radius:7px;padding:8px 12px;margin-top:8px}.nr{background:#FFF8E1;border:1.5px solid #FFB300;border-radius:8px;padding:12px 16px;margin:14px 0}.tot{background:linear-gradient(135deg,var(--azul-dk),var(--azul-xdk));border-radius:var(--radius);padding:18px 22px;color:#fff;margin-top:12px}.tot-row{display:flex;justify-content:space-between;padding:5px 0}.tot-row.main{font-size:20px;font-weight:800;border-top:1.5px solid rgba(255,255,255,.25);margin-top:10px;padding-top:12px}.dt{width:100%;border-collapse:collapse;font-size:13px}.dt th{background:var(--bg);color:var(--text-2);padding:8px 11px;text-align:left;font-size:11px;font-weight:800;text-transform:uppercase;white-space:nowrap;border-bottom:1.5px solid var(--border)}.dt td{padding:8px 11px;border-bottom:1px solid var(--border);vertical-align:middle}.dt .num{text-align:right;font-family:var(--mono);font-weight:700}.box{overflow-x:auto;border:1px solid var(--border);border-radius:8px}.cs{background:var(--bg);border-radius:8px;padding:10px 14px;margin-bottom:8px;border-left:3px solid var(--azul)}.cs .ct{font-weight:800;color:var(--azul)}.cs .cf{font-size:12px;color:var(--text-2);margin:3px 0;font-style:italic}.cs .cr{font-size:14px;font-weight:800;color:var(--ok);text-align:right;font-family:var(--mono)}.chart-wrap{max-width:300px;margin:0 auto 14px}.foot{text-align:center;color:var(--text-3);font-size:11px;margin-top:30px;line-height:1.7}@media(max-width:720px){.hdr{padding:0 14px}.fg,.fg.g3,.rec-cols,.stat-grid{grid-template-columns:1fr}.tabs{width:100%;overflow-x:auto}.step-lbl{display:none}.card{padding:18px}.prev-grid{grid-template-columns:1fr}.hbtn{display:none}}
+#chatbot-panel{position:fixed;bottom:24px;right:24px;width:390px;height:580px;background:var(--surface);border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.22);display:flex;flex-direction:column;z-index:9999;border:1px solid var(--border);transform:scale(0);transform-origin:bottom right;opacity:0;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .2s;pointer-events:none}
+#chatbot-panel.open{transform:scale(1);opacity:1;pointer-events:all}
+.cb-head{background:linear-gradient(135deg,#1565C0,#0D47A1);padding:16px 18px;border-radius:16px 16px 0 0;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.cb-avatar{width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;color:#fff;font-weight:800}
+.cb-info{flex:1}.cb-name{color:#fff;font-size:14px;font-weight:700;line-height:1.2}.cb-status{color:rgba(255,255,255,.72);font-size:11px;display:flex;align-items:center;gap:5px}
+.cb-dot{width:7px;height:7px;border-radius:50%;background:#69F0AE;animation:pulse-dot 2s infinite}@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:.4}}
+.cb-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:.15s}.cb-close:hover{background:rgba(255,255,255,.28)}
+.cb-powered{font-size:10px;color:rgba(255,255,255,.58);text-align:center;padding:5px 0 6px;background:linear-gradient(135deg,#0D47A1,#0A3272);flex-shrink:0;letter-spacing:.3px}
+.cb-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}.cb-msgs::-webkit-scrollbar{width:4px}.cb-msgs::-webkit-scrollbar-track{background:transparent}.cb-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+.msg{max-width:82%;display:flex;flex-direction:column;gap:3px}.msg.bot{align-self:flex-start}.msg.usr{align-self:flex-end}.msg-bubble{padding:10px 13px;border-radius:14px;font-size:13px;line-height:1.55}.msg.bot .msg-bubble{background:var(--azul-lt);color:var(--text);border-bottom-left-radius:4px}.msg.usr .msg-bubble{background:var(--azul);color:#fff;border-bottom-right-radius:4px}.msg-time{font-size:10px;color:var(--text-3)}.msg.usr .msg-time{text-align:right}
+.cb-typing{display:flex;align-items:center;gap:4px;padding:10px 13px;background:var(--azul-lt);border-radius:14px;border-bottom-left-radius:4px;align-self:flex-start}.cb-typing span{width:7px;height:7px;border-radius:50%;background:var(--azul);animation:typing-dot 1.2s infinite}.cb-typing span:nth-child(2){animation-delay:.2s}.cb-typing span:nth-child(3){animation-delay:.4s}@keyframes typing-dot{0%,80%,100%{transform:scale(.8);opacity:.4}40%{transform:scale(1);opacity:1}}
+.cb-quick{padding:8px 14px;display:flex;gap:6px;flex-wrap:wrap;flex-shrink:0;border-top:1px solid var(--border)}.cb-chip{padding:5px 11px;border:1.5px solid var(--azul-mid);border-radius:20px;font-size:11px;font-weight:600;color:var(--azul);cursor:pointer;background:var(--azul-lt);transition:.15s;white-space:nowrap}.cb-chip:hover{background:var(--azul);color:#fff}
+.cb-input-row{padding:12px 14px;display:flex;gap:8px;align-items:center;border-top:1px solid var(--border);flex-shrink:0}#cb-input{flex:1;border:1.5px solid var(--border);border-radius:22px;padding:9px 15px;font-size:13px;font-family:var(--font);color:var(--text);outline:none;transition:.2s;background:var(--bg)}#cb-input:focus{border-color:var(--azul);box-shadow:0 0 0 3px rgba(21,101,192,.1)}
+#cb-send{width:38px;height:38px;border-radius:50%;background:var(--azul);border:none;color:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s;flex-shrink:0}#cb-send:hover{background:var(--azul-dk)}#cb-send:disabled{background:var(--border);cursor:default}
+.cb-api-warning{margin:0 14px 10px;padding:9px 12px;background:#FFF3E0;border:1px solid var(--warn);border-radius:8px;font-size:11px;color:var(--warn);display:none;line-height:1.45}.cb-api-warning.show{display:block}.cb-api-input-row{padding:10px 14px;display:none;gap:8px;align-items:center;border-top:1px solid var(--border);flex-shrink:0}.cb-api-input-row.show{display:flex}
+#cb-apikey{flex:1;border:1.5px solid var(--border);border-radius:7px;padding:8px 12px;font-size:12px;font-family:var(--font);color:var(--text);outline:none}#cb-apikey:focus{border-color:var(--azul)}#cb-save-key{padding:8px 14px;border:none;border-radius:7px;background:var(--azul);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
+@media(max-width:720px){#chatbot-panel{width:calc(100vw - 24px);height:calc(100vh - 90px);right:12px;bottom:12px}#btn-chatbot,#btn-panel{display:inline-flex}.hbtn:not(#btn-chatbot):not(#btn-panel){display:none}}
+.hdr-logo{display:flex;align-items:center;text-decoration:none}.hdr-divider{width:1px;height:28px;background:rgba(255,255,255,.25);margin:0 4px}.hdr-badge{background:rgba(255,255,255,.18);color:#fff;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;white-space:nowrap}.hdr-spacer{flex:1}.hdr-actions{display:flex;align-items:center;gap:6px}.hbtn{gap:6px}.hbtn:hover{background:rgba(255,255,255,.22)}.ico{width:16px;height:16px;stroke-width:2.3;flex-shrink:0}.hbtn .ico{width:15px;height:15px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(3px)}.modal-bg.open{display:flex}.modal{background:var(--surface);border-radius:14px;padding:26px;width:92%;max-width:620px;max-height:92vh;overflow-y:auto;box-shadow:0 4px 20px rgba(0,0,0,.13)}.modal-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-hdr h3{font-size:16px;font-weight:800}.btn-ghost{background:transparent;border:none;color:var(--text-2);padding:7px 12px;border-radius:7px;font-family:var(--font);font-size:13px;font-weight:800;cursor:pointer}.btn-ghost:hover{background:var(--bg)}.adm-tabs{display:flex;gap:4px;margin-bottom:16px;flex-wrap:wrap}.adm-tab{padding:6px 14px;border:1.5px solid var(--border);background:transparent;border-radius:6px;font-size:12px;font-weight:800;cursor:pointer;color:var(--text-2);font-family:var(--font)}.adm-tab.active{background:var(--azul);color:#fff;border-color:var(--azul)}.btn-sm{padding:6px 14px;font-size:12px}
+</style>
+</head>
+<body class="theme-app">
+<div class="theme-dashboard-shell">
+  <aside class="theme-sidebar">
+    <div class="theme-brand">
+      <div class="theme-brand__icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h6l1.2 2H19a2 2 0 0 1 2 2v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V6a2 2 0 0 1 2-2h2Zm4.8 5.7a1.8 1.8 0 1 0 0 3.6 1.8 1.8 0 0 0 0-3.6Zm-5 1.3a1 1 0 0 0 0 2h2.2a2.8 2.8 0 0 1 5.6 0H17a1 1 0 1 0 0-2h-2.4a2.8 2.8 0 0 1-5.2 0H6.8Z"/></svg>
+      </div>
+      <div><h1>Calculadora de Convenios</h1><p>Panel principal</p></div>
+    </div>
+    <nav class="theme-nav">
+      <a href="index.html" class="is-active"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5 3 11v9a1 1 0 0 0 1 1h5.5a.5.5 0 0 0 .5-.5V15a2 2 0 0 1 4 0v5.5a.5.5 0 0 0 .5.5H20a1 1 0 0 0 1-1v-9l-9-7.5Z"/></svg></span><span>Inicio</span></a>
+      <!-- <a href="#sec-calc"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2a1 1 0 0 0-1 1v2H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a1 1 0 1 0-2 0v2H7V3a1 1 0 0 0-1-1Z"/></svg></span><span>Calculadora</span></a> -->
+      <!-- <a href="#stepper"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14v4H5V5Zm0 5h14v4H5v-4Zm0 5h14v4H5v-4Z"/></svg></span><span>Stepper</span></a> -->
+      <a href="#resumen"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2a1 1 0 0 1 1 1v18a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm6 6a1 1 0 0 1 1 1v12a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1Zm6-4a1 1 0 0 1 1 1v16a1 1 0 1 1-2 0V5a1 1 0 0 1 1-1Z"/></svg></span><span>Resultados</span></a>
+      <!-- <a href="#chatbot-panel"><span class="theme-nav__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H9.4L5 19.2V15.6A3 3 0 0 1 4 13V5Z"/></svg></span><span>Chatbot</span></a> -->
+    </nav>
+    <div class="theme-helper"><h3>Asistente Call Center</h3><p>La calculadora conserva su lógica y adopta el mismo lenguaje visual del dashboard.</p><a href="#chatbot-panel">Abrir asistente</a></div>
+  </aside>
+  <main class="theme-workspace">
+    <header class="theme-topbar">
+      <div class="theme-topbar__title"><h2>Liquidador Call Center</h2><p>CCT 781/20 · layout unificado con el dashboard principal</p></div>
+      <div class="theme-topbar__search"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 4a6.5 6.5 0 0 1 5.1 10.5l4 4a1 1 0 0 1-1.4 1.4l-4-4A6.5 6.5 0 1 1 10.5 4Zm0 2a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"/></svg><input type="search" placeholder="Buscar jornada, categorías, no remunerativos..."><span class="theme-topbar__hint">Ctrl + K</span></div>
+      <div class="theme-topbar__actions"><a class="theme-action" href="index.html">Panel</a><button class="theme-action" type="button" onclick="abrirAdmin()">Admin</button><button class="theme-action" type="button" onclick="window.print()">Imprimir</button><div class="theme-user"><div class="theme-user__avatar">CC</div><div class="theme-user__info"><strong>Call Center</strong><span>Liquidación 2026</span></div></div></div>
+    </header>
+    <div class="theme-page-shell">
+<header class="hdr"><a class="hdr-logo" href="inicioConvenios.html"><span style="font-weight:800;color:#fff;font-size:19px">e-Sueldos</span></a><div class="hdr-divider"></div><span class="hdr-title">Liquidador Call Center</span><span class="hdr-badge">CCT 781/20</span><div class="hdr-spacer"></div><div class="hdr-actions"><a class="hbtn" id="btn-panel" href="inicioConvenios.html" style="text-decoration:none"><i data-lucide="layout-dashboard" class="ico"></i>Panel principal</a><button class="hbtn" onclick="abrirChatbot()" id="btn-chatbot" style="background:rgba(255,255,255,.22);position:relative"><i data-lucide="bot" class="ico"></i>Asistente IA</button><button class="hbtn" onclick="abrirAdmin()"><i data-lucide="settings" class="ico"></i>Admin</button><button class="hbtn" onclick="window.print()"><i data-lucide="printer" class="ico"></i>Imprimir</button></div></header>
+<main class="page">
+  <div class="pg-title">Liquidador de sueldos - Call Center CCT 781/20</div>
+  <div class="pg-sub">FAECYS - Camara Argentina de Centros de Contacto - servicios de contactos y procesos de negocios a terceros</div>
+  <nav class="tabs"><button class="tab active" onclick="swMain('calc',this)">Calculadora</button><button class="tab" onclick="swMain('escala',this);rEscalas()">Escalas</button><button class="tab" onclick="swMain('ref',this)">Referencia</button></nav>
+  <section class="section active" id="sec-calc">
+    <div class="stepper" id="stepper"></div>
+    <div class="paso active" id="paso1"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">1</span>Trabajador</div></div><div class="fg"><div class="field"><label>Nombre</label><input id="p1n" placeholder="Ej: Maria Lopez"></div><div class="field"><label>CUIL</label><input id="p1c" placeholder="27-00000000-0"></div></div><div class="fg"><div class="field"><label>Fecha de ingreso</label><input type="date" id="p1i" onchange="calcAntig()"><div id="ha" class="hint"></div></div><div class="field"><label>Categoria</label><select id="p1cat" onchange="prevCat();rMini()"><option value="">Seleccione categoria</option></select></div></div><div id="prev" class="prev"></div><div class="nav-row"><span></span><button class="btn btn-primary" onclick="ip(2)">Continuar</button></div></div></div>
+    <div class="paso" id="paso2"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">2</span>Periodo y jornada</div></div><div class="fg g3"><div class="field"><label>Escala</label><select id="p2esc" onchange="prevCat();rMini()"><option value="ac2020">Acuerdo 2020/2021</option><option value="base2020">Base convenio abril 2020</option></select></div><div class="field"><label>Mes</label><input id="p2m" value="Periodo"></div><div class="field"><label>Jornada semanal</label><input type="number" id="p2hs" value="36" min="20" max="48" oninput="prevCat()"><div class="hint">Operacion: 20 a 36 hs. Mant./Adm.: 48 hs.</div></div></div><div class="fg"><div class="field"><label>Dias trabajados</label><input type="number" id="p2d" value="30" min="0" max="30"></div><div class="field"><label>A cuenta / ajuste manual</label><input type="number" id="p2acu" value="0"></div></div><div class="callout">Categorias 1 y 2: hasta 8 horas diarias o 48 semanales. Categorias 3 y 4 de operacion: hasta 36 horas semanales, con descanso pago durante la jornada.</div><div id="mini"></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(1)">Volver</button><button class="btn btn-primary" onclick="ip(3)">Continuar</button></div></div></div>
+    <div class="paso" id="paso3"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">3</span>Adicionales y descuentos</div></div><div class="tw"><div><div class="ti-lbl">Antiguedad</div><div class="ti-sub">1% por ano trabajado</div></div><label class="tgl"><input type="checkbox" id="p3ant" checked><span class="tsl"></span></label></div><div class="tw"><div><div class="ti-lbl">Presentismo / asistencia</div><div class="ti-sub">8,33% segun asignacion complementaria del convenio</div></div><label class="tgl"><input type="checkbox" id="p3pre" checked><span class="tsl"></span></label></div><div class="tw"><div><div class="ti-lbl">Asignacion extraordinaria no remunerativa</div><div class="ti-sub">Acuerdo 2020: $5.000 proporcional, o $0 en base convenio</div></div><label class="tgl"><input type="checkbox" id="p3nr" checked><span class="tsl"></span></label></div><div class="fg"><div class="field"><label>Inasistencias injustificadas (dias)</label><input type="number" id="p3inj" value="0" min="0" max="30"></div><div class="field"><label>Otros descuentos</label><input type="number" id="p3desc" value="0"></div></div><div class="fg"><div class="field"><label>Otros adicionales remunerativos</label><input type="number" id="p3otros" value="0"></div><div class="field"><label>Afiliacion sindical</label><select id="p3afi"><option value="no">No afiliado</option><option value="si">Afiliado SEC 2%</option></select></div></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(2)">Volver</button><button class="btn btn-primary" onclick="ip(4)">Continuar</button></div></div></div>
+    <div class="paso" id="paso4"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">4</span>Horas extra y empleador</div></div><div class="fg g3"><div class="field"><label>Horas extra 50%</label><input type="number" id="p4h50" value="0" min="0"></div><div class="field"><label>Horas extra 100%</label><input type="number" id="p4h100" value="0" min="0"></div><div class="field"><label>ART variable %</label><input type="number" id="p4artv" value="0.6" step="0.01"></div></div><div class="tw"><div><div class="ti-lbl">Aporte fijo OSECAC sobre asignacion NR</div><div class="ti-sub">$100 trabajador y $200 empleador cuando hay NR</div></div><label class="tgl"><input type="checkbox" id="p4ose" checked><span class="tsl"></span></label></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(3)">Volver</button><button class="btn btn-success" onclick="calcular()">Calcular</button></div></div></div>
+    <div class="paso" id="paso5"><div id="resumen"></div><div class="card"><div class="res-tabs"><button class="rt active" onclick="swRes('recibo',this)">Recibo</button><button class="rt" onclick="swRes('dist',this)">Distribucion</button><button class="rt" onclick="swRes('calc',this)">Detalle</button><button class="rt" onclick="swRes('costo',this)">Costo empleador</button></div><div id="res-recibo"></div><div id="res-dist" style="display:none"></div><div id="res-calc" style="display:none"></div><div id="res-costo" style="display:none"></div></div><div class="nav-row"><button class="btn btn-secondary" onclick="ip(4)">Volver</button><button class="btn btn-primary" onclick="calcular()">Recalcular</button></div></div>
+  </section>
+  <section class="section" id="sec-escala"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">$</span>Escalas cargadas</div></div><div class="callout">La tabla de acuerdo 2020/2021 incluye basico y asignacion extraordinaria no remunerativa. Para escalas posteriores puede actualizarse el motor sin cambiar la interfaz.</div><div class="box"><table class="dt"><thead><tr><th>Categoria</th><th>Jornada</th><th class="num">Base 2020</th><th class="num">Acuerdo 2020/21</th><th class="num">NR</th></tr></thead><tbody id="tablaEscalas"></tbody></table></div></div></section>
+  <section class="section" id="sec-ref"><div class="card"><div class="card-hdr"><div class="card-title"><span class="ic">i</span>Parametros usados</div></div><table class="dt"><tbody><tr><td>Ambito</td><td>Empresas de centros de contactos y procesos de negocios a terceros, excepto Ciudad de Cordoba</td></tr><tr><td>Categorias 1 y 2</td><td>Mantenimiento y Administrativo, 48 hs semanales</td></tr><tr><td>Categorias 3 y 4</td><td>Operacion A y B, hasta 36 hs semanales</td></tr><tr><td>Antiguedad</td><td>1% por ano</td></tr><tr><td>Presentismo</td><td>8,33%</td></tr><tr><td>NR acuerdo 2020</td><td>$5.000 jornada completa, proporcional en operacion</td></tr><tr><td>Aportes comercio</td><td>Jubilacion 11%, Ley 19.032 3%, Obra social 3%, FAECYS 0,5%, sindicato 2% si afiliado</td></tr></tbody></table></div></section>
+  <div class="foot">e-Sueldos - CCT 781/20 Call Center. Herramienta referencial; verificar escala vigente y liquidacion final con profesional habilitado.</div>
+</main>
+</div>
+</main>
+</div>
+<div class="modal-bg" id="mAdmin"><div class="modal"><div class="modal-hdr"><h3>Panel de administracion</h3><button class="btn-ghost" onclick="cAdmin()">Cerrar</button></div><div id="aLogin"><div class="field"><label>Clave</label><input type="password" id="aPwd" placeholder="Clave admin" onkeydown="if(event.key==='Enter')lAdmin()"></div><button class="btn btn-primary" style="margin-top:12px" onclick="lAdmin()">Ingresar</button><div style="font-size:11px;color:var(--text-3);margin-top:8px">Contraseña por defecto: <strong>callcenter2026</strong></div></div><div id="aPanel" style="display:none"><div class="adm-tabs"><button class="adm-tab active" onclick="swAdm('e',this)">Escalas</button><button class="adm-tab" onclick="swAdm('c',this)">Constantes</button><button class="adm-tab" onclick="swAdm('p',this)">Clave</button></div><div id="adm-e"></div><div id="adm-c" style="display:none"></div><div id="adm-p" style="display:none"><div class="fg"><div class="field"><label>Nueva clave</label><input type="password" id="np1"></div><div class="field"><label>Repetir clave</label><input type="password" id="np2"></div></div><button class="btn btn-success" onclick="chPwd()">Guardar clave</button></div></div></div></div>
+<script>
+var OPS_A={20:[15209.15,17709.15,2083.33],21:[15969.61,18594.61,2187.50],22:[16730.07,19480.07,2291.67],23:[17490.52,20365.52,2395.83],24:[18250.98,21250.98,2500.00],25:[19011.44,22136.44,2604.17],26:[19771.90,23021.90,2708.33],27:[20532.35,23907.35,2812.50],28:[21292.81,24792.81,2916.67],29:[22053.27,25678.27,3020.83],30:[22813.73,26563.73,3125.00],31:[23574.18,27449.18,3229.17],32:[24334.64,28334.64,3333.33],33:[25095.10,29220.10,3437.50],34:[25855.56,30105.56,3541.67],35:[26616.01,30991.01,3645.83],36:[27376.47,31876.47,3750.00]};
+var OPS_B={20:[15548.16,18048.16,2083.33],21:[16325.57,18950.57,2187.50],22:[17102.98,19852.98,2291.67],23:[17880.39,20755.39,2395.83],24:[18657.79,21657.79,2500.00],25:[19435.20,22560.20,2604.17],26:[20212.61,23462.61,2708.33],27:[20990.02,24365.02,2812.50],28:[21767.43,25267.43,2916.67],29:[22544.83,26169.83,3020.83],30:[23322.24,27072.24,3125.00],31:[24099.65,27974.65,3229.17],32:[24877.06,28877.06,3333.33],33:[25654.47,29779.47,3437.50],34:[26431.87,30681.87,3541.67],35:[27209.28,31584.28,3645.83],36:[27986.69,32486.69,3750.00]};
+var CATS=[{id:"cat1",lbl:"Categoria 1 - Mantenimiento",tipo:"48",base:36400,ac:42400.06,nr:5000},{id:"cat2",lbl:"Categoria 2 - Administrativo",tipo:"48",base:36501,ac:42501.96,nr:5000},{id:"cat3",lbl:"Categoria 3 - Operacion A",tipo:"op",tabla:OPS_A},{id:"cat4",lbl:"Categoria 4 - Operacion B",tipo:"op",tabla:OPS_B}];
+var C={DETSS:7003.68,ART_F:1450,SCVO:424.62,PWD:"callcenter2026"};
+function p(n){return isNaN(n)?"$0":"$"+Math.round(n).toLocaleString("es-AR")}function gv(id){var e=document.getElementById(id);return e?e.value:""}function gn(id,d){var v=parseFloat(gv(id));return isNaN(v)?(d||0):v}function gc(id){var e=document.getElementById(id);return e?e.checked:false}function cat(id){return CATS.find(function(c){return c.id===id})||null}
+function vals(c){var esc=gv("p2esc")||"ac2020",hs=Math.round(gn("p2hs",36));if(c.tipo==="op"){hs=Math.max(20,Math.min(36,hs));var r=c.tabla[hs];return{base:esc==="base2020"?r[0]:r[1],nr:esc==="base2020"?0:r[2],hs:hs}}return{base:esc==="base2020"?c.base:c.ac,nr:esc==="base2020"?0:c.nr,hs:48}}
+function calcAntig(){var i=gv("p1i"),h=document.getElementById("ha");if(!i){h.textContent="";return 0}var hoy=new Date(),d=new Date(i),a=hoy.getFullYear()-d.getFullYear(),m=hoy.getMonth()-d.getMonth();if(m<0||(m===0&&hoy.getDate()<d.getDate()))a--;a=Math.max(0,a);h.className="hint ok";h.textContent=a+" ano(s) - "+a+"%";return a}
+function prevCat(){var c=cat(gv("p1cat")),box=document.getElementById("prev");if(!c){box.classList.remove("show");return}var v=vals(c);box.innerHTML="<strong>"+c.lbl+"</strong><div class='prev-grid'><div class='pi'><span>Jornada</span><span class='pv'>"+v.hs+" hs sem.</span></div><div class='pi'><span>Basico</span><span class='pv'>"+p(v.base)+"</span></div><div class='pi'><span>No remunerativo</span><span class='pv'>"+p(v.nr)+"</span></div><div class='pi'><span>Total escala</span><span class='pv'>"+p(v.base+v.nr)+"</span></div></div>";box.classList.add("show")}
+var pN=1,ST=["Trabajador","Periodo","Adicionales","Extras","Resultado"];function rStepper(){var h="";ST.forEach(function(l,i){var n=i+1,cls=n<pN?"done":n===pN?"active":"";h+="<div class='step "+cls+"'><div class='step-num'>"+(n<pN?"✓":n)+"</div><div class='step-lbl'>"+l+"</div></div>";if(n<ST.length)h+="<div class='step-line "+(n<pN?"done":"")+"'></div>"});document.getElementById("stepper").innerHTML=h}function ip(n){document.getElementById("paso"+pN).classList.remove("active");pN=n;document.getElementById("paso"+pN).classList.add("active");rStepper();window.scrollTo(0,0)}
+function swMain(s,b){document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("active")});b.classList.add("active");document.querySelectorAll(".section").forEach(function(x){x.classList.remove("active")});document.getElementById("sec-"+s).classList.add("active")}function swRes(s,b){document.querySelectorAll(".rt").forEach(function(x){x.classList.remove("active")});b.classList.add("active");["recibo","dist","calc","costo"].forEach(function(x){document.getElementById("res-"+x).style.display=x===s?"block":"none"})}
+function calcular(){var c=cat(gv("p1cat"));if(!c){alert("Seleccione categoria");ip(1);return}var v=vals(c),dias=gn("p2d",30),prop=dias/30,base=v.base*prop,nrBase=v.nr*prop,inj=Math.min(30,gn("p3inj",0)),dInj=v.base/30*inj,basico=Math.max(0,base-dInj),ant=calcAntig(),mAnt=gc("p3ant")?basico*ant/100:0,mPre=gc("p3pre")&&inj===0?basico*.0833:0,acu=gn("p2acu",0),otros=gn("p3otros",0),tOrd=basico+mAnt+mPre+acu+otros,divisor=c.tipo==="op"?v.hs*4.33:208,vHora=tOrd/divisor,he50=gn("p4h50",0)*vHora*1.5,he100=gn("p4h100",0)*vHora*2,tRem=tOrd+he50+he100,tNR=gc("p3nr")?nrBase:0,bruto=tRem+tNR,desc=gn("p3desc",0),bSS=Math.max(0,tRem-C.DETSS),aJ=bSS*.11,aP=bSS*.03,aOS=bruto*.03,aFaecys=tRem*.005,aSind=gv("p3afi")==="si"?tRem*.02:0,aOse=gc("p4ose")&&tNR>0?100*prop:0,tDed=aJ+aP+aOS+aFaecys+aSind+aOse+desc,neto=bruto-tDed,cJ=bSS*.1077,cP=bSS*.0158,cOS=bruto*.06,cAF=bSS*.047,cFN=bSS*.0095,cART=tRem*(gn("p4artv",.6)/100)+C.ART_F,cSC=C.SCVO,cOse=gc("p4ose")&&tNR>0?200*prop:0,tCont=cJ+cP+cOS+cAF+cFN+cART+cSC+cOse;
+document.getElementById("resumen").innerHTML="<div class='stat-grid'><div class='sc'><div class='sl'>Remunerativo</div><div class='sv'>"+p(tRem)+"</div><div class='ss'>"+c.lbl+"</div></div><div class='sc'><div class='sl'>No remunerativo</div><div class='sv' style='color:var(--warn)'>"+p(tNR)+"</div><div class='ss'>Asignacion acuerdo</div></div><div class='sc'><div class='sl'>Deducciones</div><div class='sv' style='color:var(--err)'>"+p(tDed)+"</div><div class='ss'>Aportes trabajador</div></div><div class='sc'><div class='sl' style='color:var(--azul)'>Neto</div><div class='sv' style='color:var(--azul)'>"+p(neto)+"</div><div class='ss'>"+(gv("p2m")||"Periodo")+"</div></div></div>";
+function rr(t,val,cl){return"<div class='row'><span>"+t+"</span><span class='rm "+cl+"'>"+p(val)+"</span></div>"}var rec="<div class='rec-hdr'><div class='rec-emp'>"+(gv("p1n")||"Sin nombre")+"</div><div class='rec-meta'><span>CUIL: "+(gv("p1c")||"-")+"</span><span>"+c.lbl+"</span><span>"+v.hs+" hs semanales</span></div></div><div class='rec-cols'><div class='rec-block'><h4>Haberes remunerativos</h4>"+rr("Sueldo basico",basico,"pos");if(mAnt)rec+=rr("Antiguedad "+ant+"%",mAnt,"pos");if(mPre)rec+=rr("Presentismo 8,33%",mPre,"pos");if(acu)rec+=rr("A cuenta / ajuste manual",acu,"pos");if(otros)rec+=rr("Otros adicionales",otros,"pos");if(he50)rec+=rr("Horas extra 50%",he50,"pos");if(he100)rec+=rr("Horas extra 100%",he100,"pos");rec+="<div class='sub'><span>Total remunerativo</span><span>"+p(tRem)+"</span></div></div><div class='rec-block'><h4>Deducciones</h4>"+rr("Jubilacion 11%",-aJ,"neg")+rr("Ley 19.032 3%",-aP,"neg")+rr("Obra social 3%",-aOS,"neg")+rr("FAECYS 0,5%",-aFaecys,"neg");if(aSind)rec+=rr("Sindicato 2%",-aSind,"neg");if(aOse)rec+=rr("OSECAC sobre NR",-aOse,"neg");if(desc)rec+=rr("Otros descuentos",-desc,"neg");rec+="<div class='sub'><span>Total deducciones</span><span>"+p(tDed)+"</span></div></div></div>";if(tNR)rec+="<div class='nr'>"+rr("Asignacion extraordinaria no remunerativa",tNR,"pos")+"</div>";rec+="<div class='tot'><div class='tot-row'><span>Bruto total</span><span>"+p(bruto)+"</span></div><div class='tot-row'><span>Deducciones</span><span>-"+p(tDed)+"</span></div><div class='tot-row main'><span>Neto a pagar</span><span>"+p(neto)+"</span></div></div>";document.getElementById("res-recibo").innerHTML=rec;
+var labels=["Basico","Antiguedad","Presentismo","Extras/Otros","No Rem."],chartVals=[basico,mAnt,mPre,acu+otros+he50+he100,tNR],cols=["#1565C0","#0D47A1","#1976D2","#0277BD","#42A5F5"],html="<div class='chart-wrap'><canvas id='chart'></canvas></div><table class='dt'><tbody>";labels.forEach(function(l,i){if(chartVals[i]>0)html+="<tr><td>"+l+"</td><td class='num'>"+p(chartVals[i])+"</td><td class='num'>"+Math.round(chartVals[i]/(bruto||1)*100)+"%</td></tr>"});html+="</tbody></table>";document.getElementById("res-dist").innerHTML=html;setTimeout(function(){var ctx=document.getElementById("chart");if(ctx&&window.Chart)new Chart(ctx,{type:"doughnut",data:{labels:labels,datasets:[{data:chartVals,backgroundColor:cols,borderColor:"#fff",borderWidth:2}]},options:{plugins:{legend:{position:"bottom"}},cutout:"65%"}})},50);
+document.getElementById("res-calc").innerHTML="<div class='cs'><div class='ct'>Basico proporcional</div><div class='cf'>Basico escala / 30 x dias menos inasistencias</div><div class='cr'>"+p(basico)+"</div></div><div class='cs'><div class='ct'>Valor hora extra</div><div class='cf'>Remuneracion ordinaria / divisor de jornada</div><div class='cr'>"+p(vHora)+"</div></div><div class='cs'><div class='ct'>Base integral OS</div><div class='cf'>Remunerativo + no remunerativo</div><div class='cr'>"+p(bruto)+"</div></div>";
+document.getElementById("res-costo").innerHTML="<div class='box'><table class='dt'><tbody><tr><td>SIPA empleador 10,77%</td><td class='num'>"+p(cJ)+"</td></tr><tr><td>INSSJP empleador 1,58%</td><td class='num'>"+p(cP)+"</td></tr><tr><td>Obra social empleador 6%</td><td class='num'>"+p(cOS)+"</td></tr><tr><td>Asignaciones familiares 4,70%</td><td class='num'>"+p(cAF)+"</td></tr><tr><td>FNE 0,95%</td><td class='num'>"+p(cFN)+"</td></tr><tr><td>ART</td><td class='num'>"+p(cART)+"</td></tr><tr><td>SCVO</td><td class='num'>"+p(cSC)+"</td></tr><tr><td>OSECAC empleador s/NR</td><td class='num'>"+p(cOse)+"</td></tr><tr><th>Total contribuciones</th><th class='num'>"+p(tCont)+"</th></tr><tr><th>Costo total</th><th class='num'>"+p(bruto+tCont)+"</th></tr></tbody></table></div>";ip(5)}
+function rMini(){var c=cat(gv("p1cat"));document.getElementById("mini").innerHTML=c?"<div class='callout'>Categoria seleccionada: "+c.lbl+". Revisar jornada semanal para operaciones A/B.</div>":""}
+function rEscalas(){var h="";CATS.forEach(function(c){if(c.tipo==="op"){[20,24,30,36].forEach(function(hs){var r=c.tabla[hs];h+="<tr><td>"+c.lbl+"</td><td>"+hs+" hs</td><td class='num'>"+p(r[0])+"</td><td class='num'>"+p(r[1])+"</td><td class='num'>"+p(r[2])+"</td></tr>"})}else h+="<tr><td>"+c.lbl+"</td><td>48 hs</td><td class='num'>"+p(c.base)+"</td><td class='num'>"+p(c.ac)+"</td><td class='num'>"+p(c.nr)+"</td></tr>"});document.getElementById("tablaEscalas").innerHTML=h}
+function ldS(){try{var cats=localStorage.getItem("cc_cats"),cons=localStorage.getItem("cc_c");if(cats)CATS=JSON.parse(cats);if(cons){var co=JSON.parse(cons);for(var k in co)C[k]=co[k]}}catch(e){}}
+function svS(){try{localStorage.setItem("cc_cats",JSON.stringify(CATS));localStorage.setItem("cc_c",JSON.stringify(C))}catch(e){}}
+function abrirAdmin(){document.getElementById("mAdmin").classList.add("open");document.getElementById("aLogin").style.display="block";document.getElementById("aPanel").style.display="none";document.getElementById("aPwd").value=""}
+function cAdmin(){document.getElementById("mAdmin").classList.remove("open")}
+function lAdmin(){if(document.getElementById("aPwd").value===C.PWD){document.getElementById("aLogin").style.display="none";document.getElementById("aPanel").style.display="block";rAdmE();rAdmC()}else alert("Clave incorrecta")}
+function chPwd(){var p1=gv("np1"),p2=gv("np2");if(!p1||p1!==p2){alert("Las claves no coinciden");return}C.PWD=p1;svS();alert("Clave actualizada")}
+function swAdm(tab,btn){document.querySelectorAll(".adm-tab").forEach(function(t){t.classList.remove("active")});btn.classList.add("active");["e","c","p"].forEach(function(t){document.getElementById("adm-"+t).style.display=t===tab?"block":"none"})}
+function rAdmE(){var h="<div class='callout'>Edicion rapida de escalas. Las categorias de operacion muestran las jornadas de 20 a 36 horas.</div>";CATS.forEach(function(c,ci){h+="<div style='font-weight:800;font-size:12px;color:var(--azul);margin:12px 0 7px'>"+c.lbl+"</div><div class='box'><table class='dt'><thead><tr><th>Jornada</th><th class='num'>Base 2020</th><th class='num'>Acuerdo 2020/21</th><th class='num'>NR</th></tr></thead><tbody>";if(c.tipo==="op"){for(var hs=20;hs<=36;hs++){var r=c.tabla[hs];h+="<tr><td>"+hs+" hs</td><td><input type='number' value='"+r[0]+"' onchange='CATS["+ci+"].tabla["+hs+"][0]=parseFloat(this.value)||0'></td><td><input type='number' value='"+r[1]+"' onchange='CATS["+ci+"].tabla["+hs+"][1]=parseFloat(this.value)||0'></td><td><input type='number' value='"+r[2]+"' onchange='CATS["+ci+"].tabla["+hs+"][2]=parseFloat(this.value)||0'></td></tr>"}}else{h+="<tr><td>48 hs</td><td><input type='number' value='"+c.base+"' onchange='CATS["+ci+"].base=parseFloat(this.value)||0'></td><td><input type='number' value='"+c.ac+"' onchange='CATS["+ci+"].ac=parseFloat(this.value)||0'></td><td><input type='number' value='"+c.nr+"' onchange='CATS["+ci+"].nr=parseFloat(this.value)||0'></td></tr>"}h+="</tbody></table></div>"});h+="<button class='btn btn-success btn-sm' style='margin-top:12px' onclick=\"svS();rEscalas();prevCat();alert('Escalas guardadas')\">Guardar escalas</button>";document.getElementById("adm-e").innerHTML=h}
+function rAdmC(){var f=[["DETSS","Detraccion SS"],["ART_F","ART fija"],["SCVO","SCVO"]],h="<div class='fg g1'>";f.forEach(function(x){h+="<div class='field'><label>"+x[1]+"</label><input type='number' id='ac_"+x[0]+"' value='"+C[x[0]]+"'></div>"});h+="</div><button class='btn btn-success btn-sm' onclick='svCons()'>Guardar constantes</button>";document.getElementById("adm-c").innerHTML=h}
+function svCons(){["DETSS","ART_F","SCVO"].forEach(function(k){var e=document.getElementById("ac_"+k);if(e)C[k]=parseFloat(e.value)||0});svS();alert("Constantes guardadas")}
+function init(){ldS();var s=document.getElementById("p1cat");CATS.forEach(function(c){var o=document.createElement("option");o.value=c.id;o.textContent=c.lbl;s.appendChild(o)});rStepper();document.getElementById("mAdmin").addEventListener("click",function(e){if(e.target===this)cAdmin()});if(window.lucide)lucide.createIcons()}init();
+ </script>
+
+<div id="chatbot-panel">
+  <div class="cb-head">
+    <div class="cb-avatar">IA</div>
+    <div class="cb-info">
+      <div class="cb-name">Asistente Call Center</div>
+      <div class="cb-status"><span class="cb-dot"></span>Gemini - Especialista en liquidacion</div>
+    </div>
+    <button class="cb-close" onclick="cerrarChatbot()">x</button>
+  </div>
+  <div class="cb-powered">Powered by Google Gemini 2.5 Flash</div>
+  <div class="cb-api-warning" id="cb-warn">Ingresa tu API Key de Google Gemini para usar el asistente.</div>
+  <div class="cb-api-input-row" id="cb-apirow">
+    <input id="cb-apikey" type="password" placeholder="AIza... (Google Gemini API Key)">
+    <button id="cb-save-key" onclick="guardarApiKey()">Guardar</button>
+  </div>
+  <div class="cb-msgs" id="cb-msgs"></div>
+  <div class="cb-quick" id="cb-quick">
+    <span class="cb-chip" onclick="cbChip(this)">Como se calcula la jornada de operacion?</span>
+    <span class="cb-chip" onclick="cbChip(this)">Que categorias tiene el CCT 781/20?</span>
+    <span class="cb-chip" onclick="cbChip(this)">Como se calcula el no remunerativo?</span>
+    <span class="cb-chip" onclick="cbChip(this)">Que aportes tiene comercio?</span>
+  </div>
+  <div class="cb-input-row">
+    <input id="cb-input" type="text" placeholder="Consulta sobre liquidacion CCT 781/20..." onkeydown="if(event.key==='Enter')cbEnviar()">
+    <button id="cb-send" onclick="cbEnviar()">></button>
+  </div>
+</div>
+
+<script>
+var GEMINI_MODEL = (window.GEMINI_CONFIG && window.GEMINI_CONFIG.MODEL) || "gemini-2.5-flash";
+var GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models/";
+var cbHistory = [];
+var cbLoading = false;
+var geminiKey = (window.GEMINI_CONFIG && window.GEMINI_CONFIG.API_KEY ? window.GEMINI_CONFIG.API_KEY.trim() : "") || localStorage.getItem("gemini_key") || "";
+
+function geminiApiUrl(){return GEMINI_API_BASE + GEMINI_MODEL + ":generateContent"}
+
+var SYSTEM_PROMPT = "Sos un asistente especializado en liquidacion de sueldos para Call Center bajo el CCT 781/20 de Argentina. Responde siempre en espanol claro, practico y orientado a liquidadores. Usa como contexto esta calculadora: convenio FAECYS - Camara Argentina de Centros de Contacto para servicios de contactos y procesos de negocios a terceros, excepto Ciudad de Cordoba. Categorias: Categoria 1 Mantenimiento, Categoria 2 Administrativo, Categoria 3 Operacion A y Categoria 4 Operacion B. Categorias 1 y 2 tienen jornada de referencia de hasta 8 horas diarias o 48 semanales. Categorias 3 y 4 de operacion trabajan entre 20 y 36 horas semanales y la calculadora usa la tabla por jornada. Escalas disponibles: base convenio abril 2020 y acuerdo 2020/2021. El acuerdo 2020/2021 incluye basico y asignacion extraordinaria no remunerativa; para jornada completa se usa $5.000 y para operacion se proporciona segun horas semanales. Adicionales: antiguedad 1% por ano, presentismo o asistencia 8,33%, a cuenta o ajuste manual, otros adicionales remunerativos. Inasistencias injustificadas descuentan dias y hacen perder presentismo si corresponde. Horas extra: 50% y 100%, valor hora segun divisor de jornada. Aportes trabajador: jubilacion 11%, Ley 19.032 3%, obra social 3% sobre remunerativo mas no remunerativo, FAECYS 0,5%, sindicato SEC 2% si afiliado, y aporte fijo OSECAC de $100 sobre asignacion no remunerativa cuando aplica. Contribuciones empleador: SIPA 10,77%, INSSJP 1,58%, obra social 6%, asignaciones familiares 4,70%, FNE 0,95%, ART variable mas fija, SCVO y OSECAC empleador $200 sobre no remunerativo cuando aplica. Si el usuario pide calculos, pedi datos faltantes o usa supuestos explicitos. Aclara que es una herramienta referencial y que la liquidacion final debe verificarse con escala vigente y profesional habilitado.";
+
+function initChatbot(){
+  if(!geminiKey){
+    document.getElementById("cb-warn").classList.add("show");
+    document.getElementById("cb-apirow").classList.add("show");
+    document.getElementById("cb-send").disabled=true;
+    document.getElementById("cb-input").disabled=true;
+  }else{
+    cbMensajeBienvenida();
+  }
+}
+
+function cbMensajeBienvenida(){
+  cbAgregarMensaje("bot","Hola. Soy tu asistente para liquidacion de Call Center CCT 781/20. Puedo ayudarte con categorias, jornada de operacion, asignacion no remunerativa, aportes de comercio, horas extra y costo empleador. Que necesitas consultar?");
+}
+
+function guardarApiKey(){
+  var k=document.getElementById("cb-apikey").value.trim();
+  if(!k||!k.startsWith("AIza")){
+    alert("La API Key de Gemini debe comenzar con 'AIza'. Obtenela en Google AI Studio.");
+    return;
+  }
+  geminiKey=k;
+  localStorage.setItem("gemini_key",k);
+  document.getElementById("cb-warn").classList.remove("show");
+  document.getElementById("cb-apirow").classList.remove("show");
+  document.getElementById("cb-send").disabled=false;
+  document.getElementById("cb-input").disabled=false;
+  document.getElementById("cb-apikey").value="";
+  cbMensajeBienvenida();
+}
+
+function abrirChatbot(){
+  var panel=document.getElementById("chatbot-panel");
+  panel.classList.add("open");
+  if(cbHistory.length===0&&geminiKey)cbMensajeBienvenida();
+  else if(cbHistory.length===0)initChatbot();
+  setTimeout(function(){document.getElementById("cb-input").focus()},300);
+}
+function cerrarChatbot(){document.getElementById("chatbot-panel").classList.remove("open")}
+
+function cbChip(el){
+  document.getElementById("cb-input").value=el.textContent;
+  cbEnviar();
+}
+
+function cbEnviar(){
+  if(cbLoading)return;
+  var input=document.getElementById("cb-input");
+  var text=input.value.trim();
+  if(!text)return;
+  if(!geminiKey){abrirChatbot();return}
+  input.value="";
+  cbAgregarMensaje("usr",text);
+  cbHistory.push({role:"user",parts:[{text:text}]});
+  document.getElementById("cb-quick").style.display="none";
+  cbShowTyping();
+  cbLoading=true;
+  document.getElementById("cb-send").disabled=true;
+  var body={system_instruction:{parts:[{text:SYSTEM_PROMPT}]},contents:cbHistory.slice(-8),generationConfig:{temperature:.4,maxOutputTokens:800}};
+  fetch(geminiApiUrl()+"?key="+geminiKey,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+  .then(function(r){return r.json()})
+  .then(function(data){
+    cbHideTyping();
+    cbLoading=false;
+    document.getElementById("cb-send").disabled=false;
+    if(data.error){cbAgregarMensaje("bot",cbMensajeErrorApi(data.error));return}
+    var reply=data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0].text;
+    if(!reply){cbAgregarMensaje("bot","No pude obtener una respuesta. Intenta de nuevo.");return}
+    cbHistory.push({role:"model",parts:[{text:reply}]});
+    cbAgregarMensaje("bot",reply);
+  })
+  .catch(function(err){
+    cbHideTyping();
+    cbLoading=false;
+    document.getElementById("cb-send").disabled=false;
+    cbAgregarMensaje("bot","Error de conexion: "+err.message);
+  });
+}
+
+function cbMensajeErrorApi(error){
+  var msg=(error&&error.message)?error.message:"Error desconocido de Gemini.";
+  var code=error&&(error.status||error.code);
+  var lower=msg.toLowerCase();
+  if(code==="RESOURCE_EXHAUSTED"||lower.indexOf("quota")!==-1||lower.indexOf("rate")!==-1)return "Gemini rechazo la consulta por cuota o limite del proyecto. Revisa plan, billing y cuotas. Detalle: "+msg;
+  if(code==="PERMISSION_DENIED"||code==="UNAUTHENTICATED"||lower.indexOf("api key")!==-1)return "La API Key no fue aceptada por Gemini. Verifica que sea de Google AI Studio y que la API este habilitada. Detalle: "+msg;
+  if(code===404||code==="NOT_FOUND"||lower.indexOf("model")!==-1)return "Gemini no encontro el modelo configurado ("+GEMINI_MODEL+"). Detalle: "+msg;
+  return "Error de API: "+msg;
+}
+
+function cbEscape(text){
+  return text.replace(/[&<>"']/g,function(ch){return({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"})[ch]});
+}
+
+function cbAgregarMensaje(role,text){
+  var msgs=document.getElementById("cb-msgs");
+  var now=new Date();
+  var hora=now.getHours().toString().padStart(2,"0")+":"+now.getMinutes().toString().padStart(2,"0");
+  var formatted=cbEscape(text).replace(/\*\*(.*?)\*\*/g,"<strong>$1</strong>").replace(/\*(.*?)\*/g,"<em>$1</em>").replace(/\n/g,"<br>");
+  var div=document.createElement("div");
+  div.className="msg "+role;
+  div.innerHTML='<div class="msg-bubble">'+formatted+'</div><div class="msg-time">'+hora+'</div>';
+  msgs.appendChild(div);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+
+function cbShowTyping(){
+  var msgs=document.getElementById("cb-msgs");
+  var t=document.createElement("div");
+  t.id="cb-typing";
+  t.className="cb-typing";
+  t.innerHTML="<span></span><span></span><span></span>";
+  msgs.appendChild(t);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function cbHideTyping(){var t=document.getElementById("cb-typing");if(t)t.remove()}
+</script>
+</body>
+</html>
