@@ -1,0 +1,5 @@
+[
+  { "id": "grupo-1", "nombre": "Grupo 1", "estado": "activo" },
+  { "id": "grupo-2", "nombre": "Grupo 2", "estado": "activo" },
+  { "id": "grupo-3", "nombre": "Grupo 3", "estado": "activo" }
+]

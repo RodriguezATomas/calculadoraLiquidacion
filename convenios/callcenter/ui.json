@@ -1,0 +1,11 @@
+{
+  "titulo": "Liquidación de sueldos — Call Center",
+  "colorPrimario": "#4d63ff",
+  "mostrarZona": false,
+  "mostrarHorasExtra": true,
+  "mostrarPresentismo": true,
+  "mostrarAntiguedad": true,
+  "modoBase": "mensual",
+  "horasBaseMensual": 200,
+  "netoEstimadoPorcentaje": 83
+}

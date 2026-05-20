@@ -1,0 +1,11 @@
+{
+  "titulo": "Liquidación de sueldos — AFA",
+  "colorPrimario": "#3755ff",
+  "mostrarZona": false,
+  "mostrarHorasExtra": true,
+  "mostrarPresentismo": true,
+  "mostrarAntiguedad": true,
+  "modoBase": "mensual",
+  "horasBaseMensual": 200,
+  "netoEstimadoPorcentaje": 83
+}

@@ -1,0 +1,5 @@
+[
+  { "categoriaId": "administrativo-a", "periodo": "2026-05", "monto": 780000, "zona": "general", "estado": "activo" },
+  { "categoriaId": "administrativo-b", "periodo": "2026-05", "monto": 845000, "zona": "general", "estado": "activo" },
+  { "categoriaId": "cajero", "periodo": "2026-05", "monto": 910000, "zona": "general", "estado": "activo" }
+]

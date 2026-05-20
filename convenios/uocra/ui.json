@@ -1,0 +1,11 @@
+{
+  "titulo": "Liquidación de sueldos — UOCRA CCT 76/75",
+  "colorPrimario": "#5f67ff",
+  "mostrarZona": true,
+  "mostrarHorasExtra": true,
+  "mostrarPresentismo": true,
+  "mostrarAntiguedad": true,
+  "modoBase": "horario",
+  "horasBaseMensual": 176,
+  "netoEstimadoPorcentaje": 84
+}

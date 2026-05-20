@@ -1,6 +1,6 @@
-import { CONVENIO_REGISTRY } from "../../convenios/registry.js";
 import { actions, getState, selectors, subscribe } from "../app-state.js";
 import { navigateTo } from "../router.js";
+import { getAllConvenios } from "../services/convenio-storage.js";
 import { icon } from "../ui/icons.js";
 
 const renderConvenioCard = (item) => `
@@ -21,6 +21,8 @@ export const dashboardPage = {
   description: "Gestioná tus convenios, hacé cálculos y obtené respuestas al instante.",
   hidePageHeader: true,
   render() {
+    const convenios = getAllConvenios().filter((item) => item.isValid);
+
     return `
       <div class="dashboard-layout">
         <div class="dashboard-grid">
@@ -31,7 +33,7 @@ export const dashboardPage = {
                 <h2>¡Hola, Tomás! 👋</h2>
                 <p>Gestioná tus convenios, hacé cálculos y obtené respuestas al instante.</p>
               </div>
-              <div class="hero-banner__badge">${CONVENIO_REGISTRY.length} convenios activos</div>
+              <div class="hero-banner__badge">${convenios.length} convenios activos</div>
             </section>
 
             <section class="panel dashboard-convenios">
@@ -43,7 +45,7 @@ export const dashboardPage = {
                 <a class="panel-link" href="convenios.html">Ver todos</a>
               </div>
               <div class="convenios-grid" id="dashboardConveniosGrid">
-                ${CONVENIO_REGISTRY.map(renderConvenioCard).join("")}
+                ${convenios.map(renderConvenioCard).join("")}
               </div>
             </section>
 
@@ -144,11 +146,13 @@ export const dashboardPage = {
     `;
   },
   init({ registerSearch }) {
+    const convenios = getAllConvenios().filter((item) => item.isValid);
     const convenioCards = [...document.querySelectorAll("[data-convenio-card]")];
 
     const openConvenio = (convenioId) => {
-      const convenio = CONVENIO_REGISTRY.find((item) => item.id === convenioId);
+      const convenio = convenios.find((item) => item.id === convenioId && item.slug);
       if (!convenio) {
+        console.warn("[dashboard] convenio invalido omitido", { convenioId });
         return;
       }
 

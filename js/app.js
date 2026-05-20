@@ -3,6 +3,7 @@ import { initChatbot } from "./chatbot.js";
 import { initNotifications } from "./notifications.js";
 import { dashboardPage } from "./pages/dashboard-page.js";
 import { conveniosPage } from "./pages/convenios-page.js";
+import { convenioEditorPage } from "./pages/convenio-editor-page.js";
 import { iaCenterPage } from "./pages/ia-center-page.js";
 import { configuracionPage } from "./pages/configuracion-page.js";
 import { getRouteForPage } from "./router.js";
@@ -11,6 +12,7 @@ import { renderShell } from "./ui/shell.js";
 const pageMap = {
   dashboard: dashboardPage,
   convenios: conveniosPage,
+  "convenio-editor": convenioEditorPage,
   "ia-center": iaCenterPage,
   configuracion: configuracionPage,
 };

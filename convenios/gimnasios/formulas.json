@@ -1,0 +1,4 @@
+[
+  { "id": "antiguedad", "nombre": "Antigüedad", "tipo": "percentage", "base": "basico", "valor": 1, "estado": "activo" },
+  { "id": "zona", "nombre": "Zona desfavorable", "tipo": "percentage", "base": "total_remunerativo", "valor": 50, "estado": "activo" }
+]

@@ -29,6 +29,12 @@ const ROUTES = {
     label: "Convenios",
     searchPlaceholder: "Buscar convenio...",
   },
+  "convenio-editor": {
+    id: "convenio-editor",
+    href: "convenio-editor.html",
+    label: "Editor de convenio",
+    searchPlaceholder: "Buscar registros del convenio...",
+  },
   configuracion: {
     id: "configuracion",
     href: "configuracion.html",
@@ -50,6 +56,10 @@ export const getRouteForPage = (page) => {
 
   if (page === "configuracion") {
     return ROUTES.configuracion;
+  }
+
+  if (page === "convenio-editor") {
+    return ROUTES["convenio-editor"];
   }
 
   return ROUTES.dashboard;

@@ -1,0 +1,5 @@
+[
+  { "categoriaId": "administrativo", "periodo": "2026-05", "monto": 640000, "zona": "general", "estado": "activo" },
+  { "categoriaId": "enfermeria", "periodo": "2026-05", "monto": 710000, "zona": "general", "estado": "activo" },
+  { "categoriaId": "maestranza", "periodo": "2026-05", "monto": 590000, "zona": "general", "estado": "activo" }
+]

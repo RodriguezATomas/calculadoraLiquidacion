@@ -1,0 +1,10 @@
+{
+  "updatedAt": "2026-05-19T00:00:00.000Z",
+  "convenios": [
+    { "id": "uocra", "slug": "uocra", "version": 1, "status": "active", "active": true, "updatedAt": "2026-05-18", "module": "uocra" },
+    { "id": "afa", "slug": "afa", "version": 1, "status": "active", "active": true, "updatedAt": "2026-05-15", "module": "afa" },
+    { "id": "clinicas", "slug": "clinicas", "version": 1, "status": "active", "active": true, "updatedAt": "2026-05-12", "module": "clinicas" },
+    { "id": "callcenter", "slug": "callcenter", "version": 1, "status": "active", "active": true, "updatedAt": "2026-05-10", "module": "callcenter" },
+    { "id": "gimnasios", "slug": "gimnasios", "version": 1, "status": "review", "active": false, "updatedAt": "2026-05-08", "module": "gimnasios" }
+  ]
+}

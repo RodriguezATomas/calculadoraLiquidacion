@@ -1,7 +1,7 @@
 (function bootstrapGeminiConfig() {
   const STORAGE_KEY = "gemini_runtime_config_v1";
   const fallbackConfig = {
-    API_KEY: "AIzaSyAF-4wq1lHbH6fYubULQEv9YV4EJpxEUqE",
+    API_KEY: "AIzaSyDEu2oN7HT6FpCFLkoGSuSEYqU0NlwIRVU",
     MODEL: "gemini-2.5-flash",
   };
 

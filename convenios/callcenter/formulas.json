@@ -1,0 +1,4 @@
+[
+  { "id": "antiguedad", "nombre": "Antigüedad", "tipo": "percentage", "base": "basico", "valor": 1, "estado": "activo" },
+  { "id": "presentismo", "nombre": "Presentismo", "tipo": "percentage", "base": "basico", "valor": 8.33, "estado": "activo" }
+]

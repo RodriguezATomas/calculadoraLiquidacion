@@ -1,0 +1,5 @@
+[
+  { "id": "administrativo", "nombre": "Administrativo", "estado": "activo" },
+  { "id": "enfermeria", "nombre": "Enfermería", "estado": "activo" },
+  { "id": "maestranza", "nombre": "Maestranza", "estado": "activo" }
+]

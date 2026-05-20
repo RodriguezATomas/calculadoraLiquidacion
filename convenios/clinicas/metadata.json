@@ -1,0 +1,14 @@
+{
+  "id": "clinicas",
+  "slug": "clinicas",
+  "nombre": "Clínicas y Sanatorios",
+  "cct": "122/75",
+  "activity": "Clínicas y Sanatorios",
+  "icon": "heart",
+  "iconTone": "pink",
+  "source": "ClinicaySanatorios_v5.html",
+  "description": "Sector salud con categorías FATSA, presentismo y adicionales específicos.",
+  "status": "active",
+  "updatedAt": "2026-05-12",
+  "version": 1
+}

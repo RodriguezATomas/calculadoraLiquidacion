@@ -1,0 +1,11 @@
+{
+  "titulo": "Liquidación de sueldos — Clínicas y Sanatorios",
+  "colorPrimario": "#5f67ff",
+  "mostrarZona": true,
+  "mostrarHorasExtra": true,
+  "mostrarPresentismo": true,
+  "mostrarAntiguedad": true,
+  "modoBase": "mensual",
+  "horasBaseMensual": 200,
+  "netoEstimadoPorcentaje": 82
+}

@@ -1,10 +1,14 @@
 import {
   clearAllConversationRecords,
+  clearConversations,
   clearConversationRecord,
+  deleteConversation,
   exportConversationRecord,
   getCachedAnswer,
   getConversationRecord,
+  loadConversations,
   saveConversationRecord,
+  saveConversations,
   setCachedAnswer,
 } from "./chatbot-storage.js";
 
@@ -42,6 +46,8 @@ const now = () => new Date().toISOString();
 
 const state = {
   context: resolveContext(),
+  conversations: [],
+  activeConversationId: null,
   messages: [],
   isLoading: false,
   lastRequestAt: 0,
@@ -57,14 +63,26 @@ const persistMessages = () => {
     .slice(-MAX_HISTORY_MESSAGES);
 
   saveConversationRecord(state.context.key, {
+    id: state.activeConversationId || undefined,
     context: state.context,
     updatedAt: now(),
+    title: persistedMessages.find((message) => message.role === "user")?.text || "Nueva conversación",
     messages: persistedMessages,
   });
+  syncConversationBucket();
 };
 
-const loadMessages = () => {
-  const record = getConversationRecord(state.context.key);
+const syncConversationBucket = () => {
+  const bucket = loadConversations(state.context.key);
+  state.conversations = bucket.items;
+  state.activeConversationId = bucket.activeId || null;
+};
+
+const loadMessages = (conversationId = null) => {
+  syncConversationBucket();
+  const targetId = conversationId || state.activeConversationId;
+  const record = state.conversations.find((item) => item.id === targetId) || null;
+  state.activeConversationId = record?.id || null;
   state.messages = record?.messages || [];
 };
 
@@ -77,6 +95,34 @@ export const subscribeChatbotState = (listener) => {
 };
 
 export const getChatbotState = () => ({ ...state });
+
+export const setActiveConversation = (conversationId) => {
+  const bucket = loadConversations(state.context.key);
+  saveConversations(state.context.key, {
+    ...bucket,
+    activeId: conversationId,
+  });
+  loadMessages(conversationId);
+  emit();
+};
+
+export const createNewConversation = () => {
+  state.activeConversationId = null;
+  state.messages = [];
+  emit();
+};
+
+export const deleteChatConversation = (conversationId) => {
+  deleteConversation(state.context.key, conversationId);
+  loadMessages();
+  emit();
+};
+
+export const clearChatConversations = () => {
+  clearConversations(state.context.key);
+  loadMessages();
+  emit();
+};
 
 export const setChatbotLoading = (isLoading) => {
   state.isLoading = isLoading;
@@ -118,10 +164,13 @@ export const finalizeChatbotMessage = (messageId) => {
 export const clearCurrentConversation = () => {
   state.messages = [];
   clearConversationRecord(state.context.key);
+  syncConversationBucket();
   emit();
 };
 
 export const clearAllChatbotData = () => {
+  state.conversations = [];
+  state.activeConversationId = null;
   state.messages = [];
   state.isLoading = false;
   state.lastRequestAt = 0;

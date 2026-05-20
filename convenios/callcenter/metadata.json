@@ -1,0 +1,14 @@
+{
+  "id": "callcenter",
+  "slug": "callcenter",
+  "nombre": "Call Center",
+  "cct": "781/20",
+  "activity": "Atención telefónica",
+  "icon": "chat",
+  "iconTone": "violet",
+  "source": "CallCenter_v5.html",
+  "description": "Jornada, categorías y conceptos variables para atención telefónica.",
+  "status": "active",
+  "updatedAt": "2026-05-10",
+  "version": 1
+}

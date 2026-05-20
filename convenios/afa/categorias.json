@@ -1,0 +1,5 @@
+[
+  { "id": "administrativo-a", "nombre": "Administrativo A", "estado": "activo" },
+  { "id": "administrativo-b", "nombre": "Administrativo B", "estado": "activo" },
+  { "id": "cajero", "nombre": "Cajero", "estado": "activo" }
+]

@@ -1,0 +1,14 @@
+{
+  "id": "uocra",
+  "slug": "uocra",
+  "nombre": "UOCRA",
+  "cct": "76/75",
+  "activity": "Construcción",
+  "icon": "briefcase",
+  "iconTone": "blue",
+  "source": "eSueldos_UOCRA_v5_2026.html",
+  "description": "Construcción, jornales, adicionales de obra y liquidación por horas.",
+  "status": "active",
+  "updatedAt": "2026-05-18",
+  "version": 1
+}

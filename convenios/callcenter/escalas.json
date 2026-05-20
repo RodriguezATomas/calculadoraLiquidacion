@@ -1,0 +1,5 @@
+[
+  { "categoriaId": "categoria-1", "periodo": "2026-05", "monto": 520000, "zona": "general", "estado": "activo" },
+  { "categoriaId": "categoria-2", "periodo": "2026-05", "monto": 565000, "zona": "general", "estado": "activo" },
+  { "categoriaId": "categoria-3", "periodo": "2026-05", "monto": 610000, "zona": "general", "estado": "activo" }
+]

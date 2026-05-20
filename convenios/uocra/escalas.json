@@ -1,0 +1,5 @@
+[
+  { "categoriaId": "oficial-especializado", "periodo": "2026-05", "monto": 5200, "zona": "general", "estado": "activo" },
+  { "categoriaId": "medio-oficial", "periodo": "2026-05", "monto": 4700, "zona": "general", "estado": "activo" },
+  { "categoriaId": "ayudante", "periodo": "2026-05", "monto": 4300, "zona": "general", "estado": "activo" }
+]

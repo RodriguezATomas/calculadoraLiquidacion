@@ -1,0 +1,11 @@
+{
+  "titulo": "Liquidación de sueldos — Gimnasios",
+  "colorPrimario": "#5f67ff",
+  "mostrarZona": true,
+  "mostrarHorasExtra": true,
+  "mostrarPresentismo": false,
+  "mostrarAntiguedad": true,
+  "modoBase": "mensual",
+  "horasBaseMensual": 200,
+  "netoEstimadoPorcentaje": 83
+}

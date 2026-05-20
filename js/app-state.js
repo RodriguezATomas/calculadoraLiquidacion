@@ -1,4 +1,4 @@
-import { CONVENIO_REGISTRY } from "../convenios/registry.js";
+import { getAllConvenios } from "./services/convenio-storage.js";
 import { downloadJSON, readJSON, removeKey, writeJSON } from "./storage.js";
 
 const STORAGE_KEY = "dashboard_app_state_v2";
@@ -7,7 +7,7 @@ const now = () => new Date().toISOString();
 
 const defaultNotifications = [
   { id: "n1", title: "Nuevo convenio agregado", body: "Se incorporó un nuevo acceso rápido al panel.", read: false, createdAt: now() },
-  { id: "n2", title: "Escala salarial actualizada", body: "Se actualizaron valores del convenio Sanidad.", read: false, createdAt: now() },
+  { id: "n2", title: "Escala salarial actualizada", body: "Se actualizaron valores de un convenio importado.", read: false, createdAt: now() },
   { id: "n3", title: "Liquidación guardada", body: "Tu último cálculo quedó disponible en el historial.", read: true, createdAt: now() },
   { id: "n4", title: "Centro IA listo", body: "La conexión con Gemini está disponible para nuevas consultas.", read: true, createdAt: now() },
 ];
@@ -247,12 +247,12 @@ export const selectors = {
     return current.history.filter((item) => item.type === "calculation").length;
   },
   activeConventions() {
-    return CONVENIO_REGISTRY.filter((item) => item.status === "active").length;
+    return getAllConvenios().filter((item) => item.isValid && item.status === "active").length;
   },
   conventionsUpdatedThisMonth() {
-    return CONVENIO_REGISTRY.filter((item) => item.updatedAt.startsWith("2025-05")).length;
+    return getAllConvenios().filter((item) => item.isValid && (item.updatedAt || "").startsWith("2026-05")).length;
   },
   conventionsInReview() {
-    return CONVENIO_REGISTRY.filter((item) => item.status === "review").length;
+    return getAllConvenios().filter((item) => item.isValid && item.status === "review").length;
   },
 };

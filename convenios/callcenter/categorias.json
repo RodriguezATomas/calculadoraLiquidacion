@@ -1,0 +1,5 @@
+[
+  { "id": "categoria-1", "nombre": "Categoría 1", "estado": "activo" },
+  { "id": "categoria-2", "nombre": "Categoría 2", "estado": "activo" },
+  { "id": "categoria-3", "nombre": "Categoría 3", "estado": "activo" }
+]

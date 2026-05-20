@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "afa",
+    "nombre": "AFA"
+  },
+  {
+    "slug": "callcenter",
+    "nombre": "Call Center"
+  },
+  {
+    "slug": "clinicas",
+    "nombre": "Clinicas"
+  },
+  {
+    "slug": "gimnasios",
+    "nombre": "Gimnasios"
+  },
+  {
+    "slug": "uocra",
+    "nombre": "UOCRA"
+  }
+]

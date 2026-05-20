@@ -1,0 +1,14 @@
+{
+  "id": "afa",
+  "slug": "afa",
+  "nombre": "AFA",
+  "cct": "553/09",
+  "activity": "Fútbol y administración",
+  "icon": "bag",
+  "iconTone": "orange",
+  "source": "AFA_v5.html",
+  "description": "Escalas salariales, adicionales frecuentes y validaciones administrativas.",
+  "status": "active",
+  "updatedAt": "2026-05-15",
+  "version": 1
+}

@@ -1,4 +1,11 @@
-import { getState, subscribe } from "../app-state.js";
+import {
+  clearChatConversations,
+  createNewConversation,
+  deleteChatConversation,
+  getChatbotState,
+  setActiveConversation,
+  subscribeChatbotState,
+} from "../chatbot/chatbot-state.js";
 import { icon } from "../ui/icons.js";
 
 const IA_TABS = [
@@ -9,20 +16,15 @@ const IA_TABS = [
   { id: "resumen", label: "Generar resumen" },
 ];
 
-const escapeAttribute = (value) => value
-  .replaceAll("&", "&amp;")
-  .replaceAll("\"", "&quot;")
-  .replaceAll("<", "&lt;")
-  .replaceAll(">", "&gt;");
-
-const renderConversation = (entry, index) => `
-  <article class="conversation-item ${index === 0 ? "is-active" : ""}" data-history-item data-prompt="${escapeAttribute(entry.detail || entry.title)}">
+const renderConversation = (entry, isActive) => `
+  <article class="conversation-item ${isActive ? "is-active" : ""}" data-history-item data-conversation-id="${entry.id}">
     <div class="conversation-item__header">
       <div class="conversation-item__icon icon-violet">${icon("chat")}</div>
       <div>
-        <h4 class="conversation-item__title">${entry.detail || entry.title}</h4>
-        <p class="conversation-item__meta">${new Date(entry.createdAt).toLocaleDateString("es-AR")}</p>
+        <h4 class="conversation-item__title">${entry.title || "Nueva conversación"}</h4>
+        <p class="conversation-item__meta">${new Date(entry.updatedAt || entry.createdAt).toLocaleDateString("es-AR")}</p>
       </div>
+      <button type="button" class="table-action" data-delete-conversation="${entry.id}" aria-label="Eliminar">${icon("trash")}</button>
     </div>
   </article>
 `;
@@ -49,6 +51,9 @@ export const iaCenterPage = {
               <h3 class="panel-title">Historial</h3>
             </div>
             <button type="button" class="outline-button" id="newConversationButton">Nueva conversación</button>
+          </div>
+          <div class="history-panel__footer">
+            <button type="button" class="outline-button" id="clearHistoryButton">Limpiar historial</button>
           </div>
           <div class="conversation-list" id="conversationHistoryList"></div>
           <div class="history-panel__footer">
@@ -104,28 +109,36 @@ export const iaCenterPage = {
   init({ registerSearch }) {
     const historyList = document.getElementById("conversationHistoryList");
     const promptTabs = [...document.querySelectorAll("[data-ia-tab]")];
-    const input = document.getElementById("chatInput");
+    const clearHistoryButton = document.getElementById("clearHistoryButton");
 
     const renderHistory = (state, query = "") => {
       const normalized = query.trim().toLowerCase();
-      const items = state.history
-        .filter((entry) => entry.type === "chat")
-        .filter((entry) => !normalized || (entry.detail || "").toLowerCase().includes(normalized))
-        .slice(0, 6);
+      const items = state.conversations
+        .filter((entry) => !normalized || (entry.title || "").toLowerCase().includes(normalized))
+        .slice(0, 24);
 
       historyList.innerHTML = items.length
-        ? items.map(renderConversation).join("")
-        : `<div class="empty-state">${icon("chat")}<p>No hay conversaciones recientes para mostrar.</p></div>`;
+        ? items.map((entry) => renderConversation(entry, entry.id === state.activeConversationId)).join("")
+        : `<div class="empty-state">${icon("chat")}<p>No hay conversaciones todavía</p></div>`;
 
       historyList.querySelectorAll("[data-history-item]").forEach((item) => {
         item.addEventListener("click", () => {
-          input.value = item.getAttribute("data-prompt") || "";
-          input.focus();
+          setActiveConversation(item.getAttribute("data-conversation-id"));
+        });
+      });
+
+      historyList.querySelectorAll("[data-delete-conversation]").forEach((button) => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          const conversationId = button.getAttribute("data-delete-conversation");
+          if (conversationId && window.confirm("¿Querés eliminar esta conversación?")) {
+            deleteChatConversation(conversationId);
+          }
         });
       });
     };
 
-    subscribe((state) => renderHistory(state));
+    subscribeChatbotState((state) => renderHistory(state));
 
     promptTabs.forEach((tab) => {
       tab.addEventListener("click", () => {
@@ -136,12 +149,17 @@ export const iaCenterPage = {
     });
 
     document.getElementById("newConversationButton")?.addEventListener("click", () => {
-      input.value = "";
-      input.focus();
+      createNewConversation();
+    });
+
+    clearHistoryButton?.addEventListener("click", () => {
+      if (window.confirm("¿Querés limpiar todo el historial?")) {
+        clearChatConversations();
+      }
     });
 
     registerSearch((value) => {
-      renderHistory(getState(), value);
+      renderHistory(getChatbotState(), value);
     });
   },
 };

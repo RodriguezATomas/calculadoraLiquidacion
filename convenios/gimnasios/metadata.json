@@ -1,0 +1,14 @@
+{
+  "id": "gimnasios",
+  "slug": "gimnasios",
+  "nombre": "Gimnasios",
+  "cct": "738/16",
+  "activity": "Actividad física",
+  "icon": "shield",
+  "iconTone": "green",
+  "source": "Gimnasios_v5.html",
+  "description": "Roles, jornada, adicionales y liquidación mensual para actividad física.",
+  "status": "review",
+  "updatedAt": "2026-05-08",
+  "version": 1
+}

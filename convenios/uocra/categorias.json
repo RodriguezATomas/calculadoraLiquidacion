@@ -1,0 +1,5 @@
+[
+  { "id": "oficial-especializado", "nombre": "Oficial especializado", "estado": "activo" },
+  { "id": "medio-oficial", "nombre": "Medio oficial", "estado": "activo" },
+  { "id": "ayudante", "nombre": "Ayudante", "estado": "activo" }
+]
